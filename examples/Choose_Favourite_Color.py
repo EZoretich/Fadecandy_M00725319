@@ -1,12 +1,11 @@
 #Choose Favourite Color
 
 # v.1 = Implementing input and whole wall of uniform color
-# v.2 = All color selection added
+# v.2 = All color selection added, using RGB values
 # v.3 = Implementing fading effect, The fading is uniform and syncronized
+# v.4 = Converted RGB values to HUE (Clearer shading)
 
-# --> Add rolling fading
-# --> Implement more animation Pattern
-# --> Fix R G B values = Color must fade but not be too similar to each other.
+
 
 
 import opc
