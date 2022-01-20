@@ -12,12 +12,17 @@
 import opc
 import time
 import colorsys
+import numpy
+import math #to recreate rolling effect (like a wave --> sine)
 
 led_wall = [(0, 0, 0)]*360
-fading = 10
+#fading = 10
 client = opc.Client('localhost:7890')
 client.put_pixels(led_wall)
 client.put_pixels(led_wall)
+
+s = 1.0
+v = 1.0
 
 choice = input(''' Hello!
         What's your favourite colour?
@@ -38,163 +43,90 @@ while True:
     else:
         choice = input("Not a number! Please insert the number corresponding to you favourite color: ")
 
-if choice == 1: # GREEN
-    led_wall = [(0, 255, 0)]*360 # list with all green led
-    time.sleep(.1)
-    client.put_pixels(led_wall)
-    #Start fading sequence
-    led = 0
+if choice == 1: #GREEN
+    for i in range(60):
+        rgb = (0, 255 * abs(math.sin(i/54) - 0.5), 0) #math.sin returns sine of a number()
+        for x in range(6):
+            led_wall[i + x*60] = rgb
+
     while True:
-        for led in enumerate(led_wall):
-            r,g,b = led [1]
-            
-            g = g + fading
-
-            fade_color = (r,g,b)
-            led_wall[led[0]] = fade_color
-
-            if g >= 255 or g<= 0:
-                fading = -fading
-        time.sleep(.1)
+        led_wall = numpy.roll(led_wall, 3)
         client.put_pixels(led_wall)
+        time.sleep(0.01)
 
 if choice == 2: # PURPLE
-    led_wall = [(127, 0 , 255)]*360
-    time.sleep(.1)
-    client.put_pixels(led_wall)
-    
-    led = 0
+    for i in range(60):
+        rgb = (127 * abs(math.sin(i/54) - 0.5), 0, 255 * abs(math.sin(i/54) - 0.5)) #math.sin returns sine of a number()
+        for x in range(6):
+            led_wall[i + x*60] = rgb
+
     while True:
-        for led in enumerate(led_wall):
-            r,g,b = led [1]
-            r = r + fading
-            b = b + fading
-
-            fade_color = (r,g,b)
-            led_wall[led[0]] = fade_color
-
-            if r >= 255 or r <= 0:
-                fading = -fading
-        time.sleep(.1)
+        led_wall = numpy.roll(led_wall, 3)
         client.put_pixels(led_wall)
+        time.sleep(0.01)
         
 if choice == 3: # BLUE
-    led_wall = [(0, 0, 255)]*360
-    time.sleep(.1)
-    client.put_pixels(led_wall)
+    for i in range(60):
+        rgb = (0, 0, 255 * abs(math.sin(i/54) - 0.5)) #math.sin returns sine of a number()
+        for x in range(6):
+            led_wall[i + x*60] = rgb
 
-    led = 0
     while True:
-        for led in enumerate(led_wall):
-            r,g,b = led [1]
-            b = b + fading
-
-            fade_color = (r,g,b)
-            led_wall[led[0]] = fade_color
-
-            if b >= 255 or b <= 0:
-                fading = -fading
-        time.sleep(.1)
+        led_wall = numpy.roll(led_wall, 3)
         client.put_pixels(led_wall)
-    
+        time.sleep(0.01)
+
 if choice == 4: # GREY
-    led_wall = [(150, 150, 150)]*360
-    time.sleep(.1)
-    client.put_pixels(led_wall)
+    for i in range(60):
+        rgb = (150 * abs(math.sin(i/54) - 0.5), 150 * abs(math.sin(i/54) - 0.5), 150 * abs(math.sin(i/54) - 0.5)) #math.sin returns sine of a number()
+        for x in range(6):
+            led_wall[i + x*60] = rgb
 
-    led = 0
     while True:
-        for led in enumerate(led_wall):
-            r,g,b = led [1]
-            r = r + fading
-            b = b + fading
-            g = g + fading
-
-            fade_color = (r,g,b)
-            led_wall[led[0]] = fade_color
-
-            if r >= 255 or r <= 0:
-                fading = -fading
-        time.sleep(.1)
+        led_wall = numpy.roll(led_wall, 3)
         client.put_pixels(led_wall)
-    
+        time.sleep(0.01)
+
 if choice == 5: # RED
-    led_wall = [(255, 0, 0)]*360
-    time.sleep(.1)
-    client.put_pixels(led_wall)
+    for i in range(60):
+        rgb = (255 * abs(math.sin(i/54) - 0.5), 0, 0) #math.sin returns sine of a number()
+        for x in range(6):
+            led_wall[i + x*60] = rgb
 
-    led = 0
     while True:
-        for led in enumerate(led_wall):
-            r,g,b = led [1]
-            r = r + fading
-
-            fade_color = (r,g,b)
-            led_wall[led[0]] = fade_color
-
-            if r >= 255 or r <= 0:
-                fading = -fading
-        time.sleep(.1)
+        led_wall = numpy.roll(led_wall, 3)
         client.put_pixels(led_wall)
-    
+        time.sleep(0.01)
+
 if choice == 6: # YELLOW
-    led_wall = [(255, 255, 0)]*360
-    time.sleep(.1)
-    client.put_pixels(led_wall)
+    for i in range(60):
+        rgb = (255 * abs(math.sin(i/54) - 0.5), 255 * abs(math.sin(i/54) - 0.5), 0) #math.sin returns sine of a number()
+        for x in range(6):
+            led_wall[i + x*60] = rgb
 
-    led = 0
     while True:
-        for led in enumerate(led_wall):
-            r,g,b = led [1]
-            r = r + fading
-            g = g + fading
-
-            fade_color = (r,g,b)
-            led_wall[led[0]] = fade_color
-
-            if r >= 255 or r <= 0:
-                fading = -fading
-        time.sleep(.1)
+        led_wall = numpy.roll(led_wall, 3)
         client.put_pixels(led_wall)
-    
+        time.sleep(0.01)
+
 if choice == 7: # ORANGE
-    led_wall = [(255, 128, 0)]*360
-    time.sleep(.1)
-    client.put_pixels(led_wall)
+    for i in range(60):
+        rgb = (255 * abs(math.sin(i/54) - 0.5), 128 * abs(math.sin(i/54) - 0.5), 0) #math.sin returns sine of a number()
+        for x in range(6):
+            led_wall[i + x*60] = rgb
 
-    led = 0
     while True:
-        for led in enumerate(led_wall):
-            r,g,b = led [1]
-            r = r + fading
-            g = g + fading
-
-            fade_color = (r,g,b)
-            led_wall[led[0]] = fade_color
-
-            if r >= 255 or r <= 0:
-                fading = -fading
-        time.sleep(.1)
+        led_wall = numpy.roll(led_wall, 3)
         client.put_pixels(led_wall)
-    
+        time.sleep(0.01)
+
 if choice == 8: # PINK
-    led_wall = [(255, 102, 178)]*360
-    time.sleep(.1)
-    client.put_pixels(led_wall)
+    for i in range(60):
+        rgb = (255 * abs(math.sin(i/54) - 0.5), 102 * abs(math.sin(i/54) - 0.5), 178 * abs(math.sin(i/54) - 0.5)) #math.sin returns sine of a number()
+        for x in range(6):
+            led_wall[i + x*60] = rgb
 
-    led = 0
     while True:
-        for led in enumerate(led_wall):
-            r,g,b = led [1]
-            r = r + fading
-            g = g + fading
-            b = b + fading
-
-            fade_color = (r,g,b)
-            led_wall[led[0]] = fade_color
-
-            if r >= 255 or r <= 0:
-                fading = -fading
-        time.sleep(.1)
+        led_wall = numpy.roll(led_wall, 3)
         client.put_pixels(led_wall)
-    
+        time.sleep(0.01)
