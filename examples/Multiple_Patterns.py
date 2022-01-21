@@ -1,3 +1,5 @@
+#MULTIPLE PATTERNS
+
 #Experimenting with patterns
 
 import opc
@@ -5,48 +7,35 @@ import time
 import colorsys
 import numpy
 import random
+#import itertools
 
 led_wall = [(0, 0, 0)]*360 #Black Display
 fade = 10
-led = 0
 
 client = opc.Client('localhost:7890')
 client.put_pixels(led_wall)
 client.put_pixels(led_wall)
 
-#Sequence should scroll through all led, Blue --> make them change color
+s = 1.0
+v = 1.0
 
-for led in range(360):#all leds
+#client.put_pixels(itertools.repeat(72))
 
-    if led >= 0 or led < 360:
-            led_wall[led] = (0, 0, 255)
-            time.sleep(0.1)
-            client.put_pixels(led_wall)
-    if led > 1:
-            led_wall[led-1] = (0, 255, 0)
-            time.sleep(0.1)
-            client.put_pixels(led_wall)
-    if led > 2:
-            led_wall[led-2] = (255, 0, 0)
-            time.sleep(0.1)
-            client.put_pixels(led_wall)
-    if led > 3:
-            led_wall[led-3] = (200, 250, 50)
-            time.sleep(0.1)
-            client.put_pixels(led_wall)
-    if led > 4:
-            led_wall[led-4] = (0, 200, 150)
-            time.sleep(0.1)
-            client.put_pixels(led_wall)
-            
+#for led in range(360): # Colors are not as nice as I was hoping for (too dark and sad)
+#    led_wall[led] = (random.randint(0,256),random.randint(0,256),random.randint(0,256))
+#    client.put_pixels(led_wall) #send out
+#    time.sleep(0.1)
 
-    #led_wall[led] = (0, 0, 255)
-    #time.sleep(0.1)
-    #client.put_pixels(led_wall)
-    #time.sleep(1)
-    #led_wall = numpy.roll(led_wall, 1) # list, shift val
+for hue in range(360):
+    rgb_fract = colorsys.hsv_to_rgb(random.randint(hue-160,hue+160)/360.0, s, v)
+    r_fl = rgb_fract[0]
+    g_fl = rgb_fract[1]
+    b_fl = rgb_fract[2]
 
-    
+    rgb = (r_fl*255, g_fl*255, b_fl*255)
+    led_wall[hue] = rgb
+    client.put_pixels(led_wall)
+    time.sleep(0.01)
 
 #Sequence should create white and red stripes
 led = 0
@@ -63,5 +52,3 @@ while led < 60:
     time.sleep(0.1)
     client.put_pixels(led_wall)
     led = led + 1
-
-
