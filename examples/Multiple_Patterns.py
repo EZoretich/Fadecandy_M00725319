@@ -52,3 +52,30 @@ while led < 60:
     time.sleep(0.1)
     client.put_pixels(led_wall)
     led = led + 1
+
+#Sequence starts from edges and conjoin in the middle
+#ADD nice fading
+led = 0
+while led < 30:
+    for i in range(60):
+        rgb = (0, 255, 0)
+        rgb2 = (0, 0, 255)
+        for x in range (6):
+            led_wall[i + x*60] = rgb
+            led_wall[59-i + x*60] = rgb2
+    #led_wall = numpy.roll(led_wall, 3)
+    client.put_pixels(led_wall)
+    time.sleep(0.1)
+        
+        #led_wall[led + rows*60] = (0,255,0)
+        #led_wall[59-led +rows*60] = (0,0,255)
+
+    #client.put_pixels(led_wall)
+    #time.sleep(0.1)
+    #led = led + 1
+    #for B in range(1,360,2):
+        #led_wall[B] = (0,0,255)
+        #B = B +1
+    #client.put_pixels(led_wall)
+    #time.sleep(0.1)
+    
