@@ -78,4 +78,3 @@ while led < 30:
         #B = B +1
     #client.put_pixels(led_wall)
     #time.sleep(0.1)
-    
