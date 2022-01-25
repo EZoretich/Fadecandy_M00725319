@@ -201,7 +201,6 @@ def Pikachu():
                 led_wall[led + rows*60] = (255,0,0)
         led = led + 1
     return led_wall
-    
 
 # --------------- Charmander Function
 def Charmander():
