@@ -231,6 +231,52 @@ def Pokemon():
     client.put_pixels(Charmander())
     client.put_pixels(Pokeball())
     client.put_pixels(Pikachu())
+
+# -------------------------------------------------------- SNAKE DISPLAY
+def Snake():
+    led = 0
+    while led < 60:
+        for rows in range(6):
+                        # White LEDs (Snake's Body)
+            if (((led > 19 and led < 27) and rows == 1) or
+                (led == 26 and (rows == 2 or rows == 3)) or
+                ((led > 25 and led < 40) and rows == 4)):
+                led_wall[led + rows*60] = (255,255,255)
+                        # Red LED (Dot)
+            if (led == 43 and rows == 4):
+                led_wall[led + rows*60] = (255,0,0)
+        client.put_pixels(led_wall)
+        led = led + 1
+    return client.put_pixels(led_wall)
+
+# -------------------------------------------------------- TETRIS DISPLAY
+def Tetris():
+    led = 0
+    while led < 60:
+        for rows in range(6):
+                        # Yellow LEDs (T)
+            if (((led > 13 and led < 23) and (rows == 4 or rows == 5)) or
+                ((led > 16 and led < 20) and (rows == 2 or rows == 3))):
+                led_wall[led + rows*60] = (255,255,0)
+                        #Red LEDs (Z)
+            if (((led > 19 and led < 26) and (rows == 2 or rows == 3)) or
+                ((led > 22 and led < 29) and (rows == 4 or rows == 5))):
+                led_wall[led + rows*60] = (255,0,0)
+                        #Purple LEDs (I)
+            if (((led > 28 and led < 33) and
+                 (rows > 0 and rows <= 5))):
+                led_wall[led + rows*60] = (148,0,211)
+                        #Green LEDs (L)
+            if (((led > 34 and led < 43) and (rows == 4 or rows == 5)) or
+                ((led > 39 and led < 43) and (rows == 2 or rows == 3))):
+                led_wall[led + rows*60] = (0,255,0)
+                        # Blue LEDs (O)
+            if (((led > 44 and led < 49) and (rows > 2 and rows <= 5))):
+                led_wall[led + rows*60] = (51,153,255)
+        client.put_pixels(led_wall)
+        led = led + 1
+    return client.put_pixels(led_wall)
+        
 #------------------------------------------------------------------------------------------
 led_wall = [(0,0,0)]*360 #black
 
@@ -240,4 +286,7 @@ client.put_pixels(led_wall)
 #Pacman()
 #Super_Mario()
 #Pokemon()
+#Snake()
+#Tetris()
+
 time.sleep(.1)
