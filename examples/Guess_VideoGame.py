@@ -276,7 +276,131 @@ def Tetris():
         client.put_pixels(led_wall)
         led = led + 1
     return client.put_pixels(led_wall)
+
+# -------------------------------------------------------- 3, 2, 1, GO! DISPLAY
+# --------------- 3 Function
+def Three():
+    led = 0
+    while led < 60:
+        for rows in range(6):
+            if (((led > 28 and led < 33) and (rows == 0 or rows == 5)) or
+                ((led == 28 or led == 33) and (rows == 1 or rows == 4)) or
+                ((led > 30 and led < 34) and (rows == 2 or rows == 3))):
+                led_wall[led + rows*60] = (255,255,255)
+        client.put_pixels(led_wall)
+        led = led + 1
+    return client.put_pixels(led_wall)
+
+# --------------- 2 Function
+def Two():
+    led = 0
+    while led < 60:
+        for rows in range(6):
+            if (((led > 28 and led < 33) and (rows == 0 or rows == 5)) or
+                ((led == 28 or led == 33) and (rows == 1 or rows == 5)) or
+                (led == 30 and rows == 4) or
+                (led == 31 and rows == 3) or
+                (led == 32 and rows == 2)):
+                led_wall[led + rows*60] = (255,255,255)
+        client.put_pixels(led_wall)
+        led = led + 1
+    return client.put_pixels(led_wall)
+# --------------- 1 Function
+def One():
+    led = 0
+    while led < 60:
+        for rows in range (6):
+            if (((led > 27 and led < 33) and rows == 5) or
+                (led == 28 and rows == 1) or
+                (led == 29 and rows == 0) or
+                (led == 30 and (rows >= 0 and rows < 5))):
+                led_wall[led + rows*60] = (255,255,255)
+        client.put_pixels(led_wall)
+        led = led + 1
+    return client.put_pixels(led_wall)
+# --------------- GO! Function
+def Go():
+    led = 0
+    while led < 60:
+        for rows in range(6):
+            if (((led > 24 and led < 29 or led > 32 and led < 37) and
+                 (rows == 0 or rows == 5)) or
+                ((led == 24 or led == 32 or led == 37) and (rows > 0 and rows < 5)) or
+                (led == 40 and (rows >= 0 and rows < 4 or rows == 5)) or
+                ((led > 27 and led < 30) and rows == 3) or
+                ( led == 29 and rows == 4)):
+                led_wall[led + rows*60] = (255,255,255)
+        client.put_pixels(led_wall)
+        led = led + 1
+    return client.put_pixels(led_wall)
+
+# -------------------------------------------------------- WRONG ANSWER DISPLAY
+def Wrong():
+    led = 0
+    while led<30: 
+        for rows in range(6):
+            led_wall[led + rows*60] = (255,0,0)
+            led_wall[59-led + rows*60] = (255,0,0)
+        client.put_pixels(led_wall)
+        time.sleep(0.1)
+        led = led + 1
+
+    for rows in range(6):
+        led_wall[led + rows*60] = (255,255,255)
+        led = led + 1
+    client.put_pixels(led_wall)
+    for rows in range(6):
+        led_wall[led-1 + rows*60] = (255,255,255)
+        led = led - 1
+    client.put_pixels(led_wall)
+
+    return client.put_pixels(led_wall)
         
+# -------------------------------------------------------- RIGHT ANSWER DISPLAY
+def Right():
+    led = 0
+    while led < 30:
+        for rows in range(6):
+            led_wall[led + rows*60] = (0,255,0)
+            led_wall[59-led + rows*60] = (0,255,0)
+        client.put_pixels(led_wall)
+        time.sleep(0.1)
+        led = led + 1
+
+    for rows in range(6):
+        led_wall[led+4 + rows*60] = (255,255,255)
+        led = led - 1
+    client.put_pixels(led_wall)
+    for rows in range(3,6):
+        led_wall[led+2 + rows*60] = (255,255,255)
+        led = led + 1
+    client.put_pixels(led_wall)
+
+    return client.put_pixels(led_wall)
+            
+# -------------------------------------------------------- LOSER DISPLAY
+def Lose():
+    #led_wall = [(255,255,255)]*360
+    fade = 10
+    while True:
+        for led in enumerate(led_wall):
+  
+            r,g,b = led[1]
+            r = r+fade
+            g = g+fade
+            b = b+fade
+
+            fading = (r,g,b)
+            led_wall[led[0]] = fading
+
+            if r >= 255 or r <= 0:
+                fade = -fade
+
+        client.put_pixels(led_wall)
+        time.sleep(0.1)
+
+    return client.put_pixels(led_wall)
+# -------------------------------------------------------- WINNER DISPLAY
 #------------------------------------------------------------------------------------------
 led_wall = [(0,0,0)]*360 #black
 
@@ -288,5 +412,12 @@ client.put_pixels(led_wall)
 #Pokemon()
 #Snake()
 #Tetris()
+#Three()
+#Two()
+#One()
+#Go()
+#Wrong()
+#Right()
+Lose()
 
 time.sleep(.1)
