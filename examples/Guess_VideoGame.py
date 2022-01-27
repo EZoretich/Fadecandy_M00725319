@@ -1,6 +1,12 @@
 import opc
 import time
 import random
+import numpy
+# -------------------------------------------------------- CLEAR SCREEN
+def Clear():
+    for led in range(360):
+        led_wall[led] = (0,0,0)
+        led = led + 1
 # -------------------------------------------------------- SUPER MARIO DISPLAY
 # --------------- Mario Function
 def  Mario():     
@@ -285,7 +291,7 @@ def Three():
                 ((led == 28 or led == 33) and (rows == 1 or rows == 4)) or
                 ((led > 30 and led < 34) and (rows == 2 or rows == 3))):
                 led_wall[led + rows*60] = (255,255,255) #Give RGB value to those leds
-        client.put_pixels(led_wall) #Place latest frame on led screen 
+        client.put_pixels(led_wall) #Place latest frame on led screen
         led = led + 1
 
 # --------------- 2 Function
@@ -327,6 +333,21 @@ def Go():
                 led_wall[led + rows*60] = (255,255,255) #Give RGB value to those leds
         client.put_pixels(led_wall) #Place latest frame on led screen 
         led = led + 1
+
+# -------------------------------------------------------- COUNTDOWN FULL FUNCTION
+def Countdown():
+    Three()
+    time.sleep(1)
+    Clear()
+    Two()
+    time.sleep(1)
+    Clear()
+    One()
+    time.sleep(1)
+    Clear()
+    Go()
+    time.sleep(0.1)
+    Clear()
 
 # -------------------------------------------------------- WRONG ANSWER DISPLAY
 def Wrong():
@@ -452,14 +473,16 @@ time.sleep(0.1)
 #Go()
 #Wrong()
 #Right()
-Lose()
+#Lose()
 #Win()
 #Sad()
 #Happy()
+#Countdown()
 
 choice = input('''\t\t\t Welcome to GUESS THE GAME!
         You will see a series of recreated images on the LED display.
         Please identify the videogame and type in your answer.
+        Be carefull, you will only get one chance!
         \n\t\t\t\t GOOD LUCK!
         \n\t Are You Ready to start? \t Please type 'Yes' or 'No'\n :''')
 while True:
@@ -477,5 +500,20 @@ while True:
 
 
 
-#if choice == 'Yes' or choice == 'yes':
-    
+if choice == 'Yes' or choice == 'yes':
+    Countdown()
+    time.sleep(1)
+    Clear()
+    Pacman()
+    while True:
+        choice = input("Which game is this? ")
+        if choice == 'Pacman' or choice == 'pacman':
+            Right()
+            time.sleep(1.5)
+            print("Correct!")
+            break
+        else:
+            Wrong()
+            time.sleep(1)
+            print("Oh no! That's wrong")
+            break
