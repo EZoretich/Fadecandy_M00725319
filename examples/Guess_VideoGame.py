@@ -4,8 +4,8 @@ import random
 import numpy
 # -------------------------------------------------------- CLEAR SCREEN
 def Clear():
-    for led in range(360):
-        led_wall[led] = (0,0,0)
+    for led in range(360): # for all leds
+        led_wall[led] = (0,0,0) #make them black
         led = led + 1
 # -------------------------------------------------------- SUPER MARIO DISPLAY
 # --------------- Mario Function
@@ -461,31 +461,15 @@ led_wall = [(0,0,0)]*360 #Black
 client = opc.Client('localhost:7890')
 client.put_pixels(led_wall) #Place frame on led screen 
 time.sleep(0.1)
-
-#Pacman()
-#Super_Mario()
-#Pokemon()
-#Snake()
-#Tetris()
-#Three()
-#Two()
-#One()
-#Go()
-#Wrong()
-#Right()
-#Lose()
-#Win()
-#Sad()
-#Happy()
-#Countdown()
+score = 0 #Variable to kkep score of the guesses
 
 choice = input('''\t\t\t Welcome to GUESS THE GAME!
         You will see a series of recreated images on the LED display.
         Please identify the videogame and type in your answer.
         Be carefull, you will only get one chance!
         \n\t\t\t\t GOOD LUCK!
-        \n\t Are You Ready to start? \t Please type 'Yes' or 'No'\n :''')
-while True:
+        \n\t Are You Ready to start? \t Please type 'Yes' or 'No'\n :''') #User input
+while True: #Keep running
     if choice.isdigit() == False: # If the input is not a number:
         choice = str(choice)
         if choice == 'No' or choice == 'no': # If answer is no:
@@ -500,20 +484,92 @@ while True:
 
 
 
-if choice == 'Yes' or choice == 'yes':
-    Countdown()
-    time.sleep(1)
-    Clear()
-    Pacman()
+if choice == 'Yes' or choice == 'yes': # If yes, start animations
     while True:
+        Countdown()
+        time.sleep(1)
+        Clear()
+        #------------Guess First Animation (Pacman)
+        Pacman() # Send pacman leds
+        choice = input("Which game is this? ") # ask for input
+        if choice == 'Pacman' or choice == 'pacman': # if answer is correct
+            Right() # Play Right animation
+            time.sleep(1)
+            print("Correct!") # print "Correct"
+            score = score + 1# add correct answer to the score
+        else: # if answer is wrong
+            Wrong() # play Wrong animation
+            time.sleep(1)
+            print("Oh no! That's wrong") # print "not correct"
+        Clear() # clear the screen (all black)
+        Countdown() # Start countdown before new animation
+        time.sleep(1)
+        #----------- Guess Second Animation (Pokemon)
+        Pokemon()
         choice = input("Which game is this? ")
-        if choice == 'Pacman' or choice == 'pacman':
+        if choice == 'Pokemon' or choice == 'pokemon':
             Right()
-            time.sleep(1.5)
+            time.sleep(1)
             print("Correct!")
-            break
+            score = score + 1
         else:
             Wrong()
             time.sleep(1)
             print("Oh no! That's wrong")
-            break
+        Clear()
+        Countdown()
+        time.sleep(1)
+        #--------------- Guess Third Animation (Super Mario)
+        Super_Mario()
+        choice = input("Which game is this? ")
+        if choice == 'Super Mario' or choice == 'super mario':
+            Right()
+            time.sleep(1)
+            print("Correct!")
+            score = score + 1
+        else:
+            Wrong()
+            time.sleep(1)
+            print("Oh no! That's wrong")
+        Clear()
+        Countdown()
+        time.sleep(1)
+        #--------------- Guess Fourth Animation (Tetris)
+        Tetris()
+        choice = input("Which game is this? ")
+        if choice == 'Tetris' or choice == 'tetris':
+            Right()
+            time.sleep(1)
+            print("Correct!")
+            score = score + 1
+        else:
+            Wrong()
+            time.sleep(1)
+            print("Oh no! That's wrong")
+        Clear()
+        Countdown()
+        time.sleep(1)
+        #--------------- Guess Fifth Animation (Snake)
+        Snake()
+        choice = input("Which game is this? ")
+        if choice == 'Snake' or choice == 'snake':
+            Right()
+            time.sleep(1)
+            print("Correct!")
+            score = score + 1
+            
+        else:
+            Wrong()
+            time.sleep(1)
+            print("Oh no! That's wrong")
+            
+        if score > 2: # if the score is at least 3/5
+            Clear() # clear screen
+            print("Congrats! You won!") # print 'you won'
+            Win() # play winning animation
+            time.sleep(0.1)
+        else: # if the score is below 3/5 (not possible to be over 5)
+            Clear() # clear screen
+            print(" Whoops! You lost! Better luck next time") # print ' you lost'
+            Lose() # playing losign animation
+            time.sleep(0.1)
