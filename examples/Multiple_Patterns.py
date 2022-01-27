@@ -7,6 +7,7 @@ import time
 import colorsys
 import numpy
 import random
+import math
 #import itertools
 
 led_wall = [(0, 0, 0)]*360 #Black Display
@@ -35,7 +36,7 @@ for hue in range(360):
     rgb = (r_fl*255, g_fl*255, b_fl*255)
     led_wall[hue] = rgb
     client.put_pixels(led_wall)
-    time.sleep(0.01)
+    time.sleep(0.02)
 
 #Sequence should create white and red stripes
 led = 0
@@ -55,26 +56,45 @@ while led < 60:
 
 #Sequence starts from edges and conjoin in the middle
 #ADD nice fading
+#----------------------------------
 led = 0
 while led < 30:
-    for i in range(60):
-        rgb = (0, 255, 0)
-        rgb2 = (0, 0, 255)
-        for x in range (6):
-            led_wall[i + x*60] = rgb
-            led_wall[59-i + x*60] = rgb2
-    #led_wall = numpy.roll(led_wall, 3)
-    client.put_pixels(led_wall)
-    time.sleep(0.1)
-        
-        #led_wall[led + rows*60] = (0,255,0)
-        #led_wall[59-led +rows*60] = (0,0,255)
+    for led in range(30):
+        shade = (102 * ((led/10) - 0.2), 0, 204 * ((led/10) - 0.2))
+        #shade2 = (255 * abs(math.sin(led/20) - 0.5),128 * abs(math.sin(led/40) - 0.5),0)
+        for rows in range(6):
+            led_wall[29-led + rows*60] = shade
+            led_wall[30+led + rows*60] = shade
+        led = led + 1
+        client.put_pixels(led_wall)
+        time.sleep(0.1)
 
-    #client.put_pixels(led_wall)
-    #time.sleep(0.1)
-    #led = led + 1
-    #for B in range(1,360,2):
-        #led_wall[B] = (0,0,255)
-        #B = B +1
+led = 0
+while led < 30:
+    for led in range(30):
+        shade2 = (255 * ((led/10) - 0.2),128 * ((led/10) - 0.2),0)
+        for rows in range(6):
+            led_wall[29-led + rows*60] = shade2
+            led_wall[30+led + rows*60] = shade2
+        led = led + 1
+        client.put_pixels(led_wall)
+        time.sleep(0.1)
+
+#----------------------------------
+led = 0
+while led < 30:
+    for led in range(30):
+        rgb = (0, 255 * abs(math.sin(led/60) - 0.5), 0)
+        rgb2 = (0, 0, 255 * abs(math.sin(led/60) - 0.5))
+        for rows in range (6):
+            led_wall[led + rows*60] = rgb
+            led_wall[59-led + rows*60] = rgb2
+        client.put_pixels(led_wall)
+        led = led + 1
+        time.sleep(0.1)
+
+#for B in range(1,360,2):
+    #led_wall[B] = (0,0,255)
+    #B = B +1
     #client.put_pixels(led_wall)
     #time.sleep(0.1)
