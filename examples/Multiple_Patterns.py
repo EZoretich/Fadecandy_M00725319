@@ -118,7 +118,17 @@ while led < 60:
     client.put_pixels(led_wall)
     led = led + 1
     time.sleep(0.1)
-
+    for rows in range(6):
+        if ((not((rows+2)%2)) and (not led % 2)):
+            led_wall[led+rows*60] = (0,0,255)
+        elif ((not((rows+2)%2)) and  led % 2):
+            led_wall[led+rows*60] = (255,255,0)
+        elif (((rows+2)%2) and  led % 2):
+            led_wall[led+rows*60] = (0,0,255)
+        else:
+            led_wall[led+rows*60] = (255,255,0)
+        client.put_pixels(led_wall)
+        time.sleep(0.1)
 #for B in range(1,360,2):
     #led_wall[B] = (0,0,255)
     #B = B +1
