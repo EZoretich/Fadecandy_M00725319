@@ -1,6 +1,4 @@
-#MULTIPLE PATTERNS
-
-#Experimenting with patterns
+#CHRISTMAS LIGHTS(?)
 
 import opc
 import time
@@ -92,6 +90,34 @@ while led < 30:
         client.put_pixels(led_wall)
         led = led + 1
         time.sleep(0.1)
+
+#----------------------------------
+led = 0
+while led < 30:
+    for led in range(30):
+        rgb = (0, 0, 255 * abs(math.sin(led/60) - 0.5))
+        rgb2 = (0, 255 * abs(math.sin(led/60) - 0.5), 0)
+        for rows in range (6):
+            led_wall[led + rows*60] = rgb
+            led_wall[59-led + rows*60] = rgb2
+        client.put_pixels(led_wall)
+        led = led + 1
+        time.sleep(0.1)
+#--------------------------------------
+led = 0
+while led < 60:
+    for rows in range(6):
+        if ((not((rows+2)%2)) and (not led % 2)):
+            led_wall[led+rows*60] = (255,0,255)
+        elif ((not((rows+2)%2)) and  led % 2):
+            led_wall[led+rows*60] = (224,238,238)
+        elif (((rows+2)%2) and  led % 2):
+            led_wall[led+rows*60] = (255,0,255)
+        else:
+            led_wall[led+rows*60] = (224,238,238)
+    client.put_pixels(led_wall)
+    led = led + 1
+    time.sleep(0.1)
 
 #for B in range(1,360,2):
     #led_wall[B] = (0,0,255)
