@@ -452,7 +452,7 @@ def Win():
             fade = -fade # If it did, change direction
                
         Happy()     
-        time.sleep(0.1)
+        time.sleep(0.1) #delay 
         client.put_pixels(led_wall) #Place latest frame on led screen
 
 #------------------------------------------------------------------------------------------
@@ -460,7 +460,7 @@ led_wall = [(0,0,0)]*360 #Black
 
 client = opc.Client('localhost:7890')
 client.put_pixels(led_wall) #Place frame on led screen 
-time.sleep(0.1)
+time.sleep(0.1) #delay
 score = 0 #Variable to kkep score of the guesses
 
 choice = input('''\t\t\t Welcome to GUESS THE GAME!

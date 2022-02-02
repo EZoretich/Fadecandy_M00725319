@@ -6,7 +6,6 @@ import colorsys
 import numpy
 import random
 import math
-#import itertools
 
 led_wall = [(0, 0, 0)]*360 #Black Display
 fade = 10
@@ -103,34 +102,33 @@ while led < 30:
         client.put_pixels(led_wall)
         led = led + 1
         time.sleep(0.1)
-#--------------------------------------
+#-------------------------------------- iter. T F T /n F T F
 led = 0
 while led < 60:
     for rows in range(6):
         if ((not((rows+2)%2)) and (not led % 2)):
-            led_wall[led+rows*60] = (255,0,255)
+            led_wall[59-led+rows*60] = (255,0,255)
         elif ((not((rows+2)%2)) and  led % 2):
-            led_wall[led+rows*60] = (224,238,238)
+            led_wall[59-led+rows*60] = (224,238,238)
         elif (((rows+2)%2) and  led % 2):
-            led_wall[led+rows*60] = (255,0,255)
+            led_wall[59-led+rows*60] = (255,0,255)
         else:
-            led_wall[led+rows*60] = (224,238,238)
+            led_wall[59-led+rows*60] = (224,238,238)
     client.put_pixels(led_wall)
     led = led + 1
     time.sleep(0.1)
+
+#----------------------------------------- Alternating col of rows, with nupy rolling effect
+for led in range(60):
     for rows in range(6):
-        if ((not((rows+2)%2)) and (not led % 2)):
-            led_wall[led+rows*60] = (0,0,255)
-        elif ((not((rows+2)%2)) and  led % 2):
-            led_wall[led+rows*60] = (255,255,0)
-        elif (((rows+2)%2) and  led % 2):
-            led_wall[led+rows*60] = (0,0,255)
+        if rows %2:
+            led_wall[59-led+rows*60] = (128 * (led/30),255 * (led/30),0)
+            client.put_pixels(led_wall)
+            time.sleep(0.003)
         else:
-            led_wall[led+rows*60] = (255,255,0)
-        client.put_pixels(led_wall)
-        time.sleep(0.1)
-#for B in range(1,360,2):
-    #led_wall[B] = (0,0,255)
-    #B = B +1
-    #client.put_pixels(led_wall)
-    #time.sleep(0.1)
+            led_wall[led+rows*60] = (255 * (led/30),128 * (led/30),0)
+            time.sleep(0.01)
+while True:
+    led_wall = numpy.roll(led_wall, 3)
+    client.put_pixels(led_wall)
+    time.sleep(0.02)
