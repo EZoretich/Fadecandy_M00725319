@@ -7,6 +7,10 @@ import numpy
 import random
 import math
 
+def Clear():
+    led_wall = [(0,0,0)]*360
+    client.put_pixels(led_wall)
+
 led_wall = [(0, 0, 0)]*360 #Black Display
 fade = 10
 
@@ -132,3 +136,16 @@ while True:
     led_wall = numpy.roll(led_wall, 3)
     client.put_pixels(led_wall)
     time.sleep(0.02)
+    #time.sleep(5)
+    break
+
+#----------------------------------------- DNA
+Clear()
+led = 0
+while led < 60:
+    for rows in range(6):
+        led_wall[led+rows*60] = (0,255,255)
+        led_wall[59-led+rows*60] = (255,0,255)
+        led = led + 1
+        time.sleep(0.1)
+        client.put_pixels(led_wall)
