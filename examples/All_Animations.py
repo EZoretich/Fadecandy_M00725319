@@ -539,7 +539,7 @@ print('''\t Hi! Welcome to my video presentation! \n\t Which animation would you
       \t\t\t ________________________________________________________
       \t\t\t|                        \t                         |
       \t\t\t|                        \t                         |
-      \t\t\t|    1) Favorite Color   \t 4) Christmas Lights     |
+      \t\t\t|    1) Favorite Color   \t 4) Animation 4     |
       \t\t\t|                        \t                         |
       \t\t\t|    2) Guess the Game   \t 5) Animation 5          |
       \t\t\t|                        \t                         |
