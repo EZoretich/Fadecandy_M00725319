@@ -5,15 +5,15 @@ import colorsys
 import numpy
 import math
 import random
-#--------------------- DEFINING FUNCTIONS
-# -------------------------------------------------------- CLEAR SCREEN
+#------------------------------------------------------------- DEFINING FUNCTIONS ----------------------------------------------#
+# ------------------------------------------------------------ CLEAR SCREEN
 def Clear():
     for led in range(360): # All leds
         led_wall[led] = (0,0,0) # Make them black
         led = led + 1
 
-#-------------------------------------------------------------------FUNCTIONS for CHRISTMAS LIGHTS
-#------------------------------------------ Function for DNA pattern
+#------------------------------------------------------------- FUNCTIONS for CHRISTMAS LIGHTS
+#-------------------------------------------------------- Function for DNA pattern
 def DNA():
     led = 0
     while led < 60: #Consider all rows at the same time (60 leds in one row)
@@ -24,7 +24,7 @@ def DNA():
             time.sleep(0.07)
             client.put_pixels(led_wall) # Display on Simulator
 
-#------------------------------------------ Function for Christmas Tree (Lights OFF)
+#-------------------------------------------------------- Function for Christmas Tree (Lights OFF)
 def Tree_off():
     led = 0
     while led < 60: #Consider all rows at the same time (60 leds in one row)
@@ -40,7 +40,7 @@ def Tree_off():
         led = led + 1
     client.put_pixels(led_wall) # Display on Simulator
 
-##------------------------------------------ Function for Christmas Tree (Lights ON)
+##------------------------------------------------------- Function for Christmas Tree (Lights ON)
 def Tree_on():
     led = 0
     while led < 60: #Consider all rows at the same time (60 leds in one row)
@@ -69,9 +69,9 @@ def Tree_on():
         led = led + 1
     client.put_pixels(led_wall) # Display on Simulator
 
-#--------------------------------------------------------------------------------FUNCTIONS for GUESS THE GAME
-# -------------------------------------------------------- SUPER MARIO DISPLAY
-# --------------- Mario Function
+#--------------------------------------------------------------- FUNCTIONS for GUESS THE GAME
+# -------------------------------------------------------------- SUPER MARIO DISPLAY
+# ------------------------------------------------------- Mario Function
 def  Mario():     
     led = 0
 
@@ -92,7 +92,7 @@ def  Mario():
         led = led + 1
     return led_wall # Return led display with updated led colors
 
-# --------------- Tube Function
+# ----------------------------------------------------- Tube Function
 def Tube():
     led = 0
 
@@ -110,7 +110,7 @@ def Tube():
         led = led + 1
     return led_wall
 
-# --------------- Koopa Troopa Function
+# --------------------------------------------------- Koopa Troopa Function
 def Koopa():
     led = 0
     while led < 60: #Consider all rows at the same time (60 leds in one row)
@@ -126,7 +126,7 @@ def Koopa():
         led = led + 1
     return led_wall
 
-# --------------- Super Mushroom Function
+# ------------------------------------------------ Super Mushroom Function
 def Mushroom():
     led = 0
     while led < 60: #Consider all rows at the same time (60 leds in one row)
@@ -154,7 +154,7 @@ def Super_Mario():
     client.put_pixels(Mushroom()) #Place latest frame on led screen (From Mushroom)
     
 # --------------------------------------------------- PACMAN DISPLAY
-# --------------- Mr Pacman Function
+# ------------------------------------------- Mr Pacman Function
 def Mr_Pacman():
     led = 0
     while led < 60: #Consider all rows at the same time (60 leds in one row)
@@ -173,7 +173,7 @@ def Mr_Pacman():
         led = led + 1
     return led_wall
 
-# --------------- Blue Ghost Function
+# --------------------------------------- Blue Ghost Function
 def Blue_Ghost():
     led = 0
     while led < 60: #Consider all rows at the same time (60 leds in one row)
@@ -190,7 +190,7 @@ def Blue_Ghost():
         led = led + 1
     return led_wall
                 
-# --------------- Purple Ghost Function
+# ----------------------------------- Purple Ghost Function
 def Purple_Ghost():
     led = 0
     while led < 60: #Consider all rows at the same time (60 leds in one row)
@@ -207,7 +207,7 @@ def Purple_Ghost():
         led = led + 1
     return led_wall
 
-# --------------- Cherry Function
+# ------------------------------------- Cherry Function
 def Cherry():
     led = 0
     while led < 60: #Consider all rows at the same time (60 leds in one row)
@@ -223,15 +223,15 @@ def Cherry():
         led = led + 1
     return led_wall
 
-#---------------------------------------------------- FULL PACMAN FUNCTION
+#------------------------------------------------------------ FULL PACMAN FUNCTION
 def Pacman():
     client.put_pixels(Mr_Pacman()) #Place latest frame on led screen (From Mr_Pacman)
     client.put_pixels(Blue_Ghost()) #Place latest frame on led screen (From Blue_Ghost)
     client.put_pixels(Purple_Ghost()) #Place latest frame on led screen (From Purple_Ghost)
     client.put_pixels(Cherry()) #Place latest frame on led screen (From Cherry)
 
-# -------------------------------------------------------- POKEMON DISPLAY
-# --------------- PokeBall Function
+# ------------------------------------------------------------- POKEMON DISPLAY
+# ---------------------------------------------------- PokeBall Function
 def Pokeball():
     led = 0
     while led < 60: #Consider all rows at the same time (60 leds in one row)
@@ -252,7 +252,7 @@ def Pokeball():
         led = led + 1
     return led_wall
 
-# --------------- Pikachu Function
+# ----------------------------------------------------- Pikachu Function
 def Pikachu():
     led = 0
     while led < 60: #Consider all rows at the same time (60 leds in one row)
@@ -271,7 +271,7 @@ def Pikachu():
         led = led + 1
     return led_wall
 
-# --------------- Charmander Function
+# ---------------------------------------------------- Charmander Function
 def Charmander():
     led = 0
     while led < 60: #Consider all rows at the same time (60 leds in one row)
@@ -295,13 +295,13 @@ def Charmander():
         led = led + 1
     return led_wall
 
-#---------------------------------------------------- FULL POKEMON FUNCTION
+#------------------------------------------------------------ FULL POKEMON FUNCTION
 def Pokemon():
     client.put_pixels(Charmander()) #Place latest frame on led screen (From Charmander)
     client.put_pixels(Pokeball()) #Place latest frame on led screen (From Pokeball)
     client.put_pixels(Pikachu()) #Place latest frame on led screen (From Pikachu)
 
-# -------------------------------------------------------- SNAKE DISPLAY
+# ------------------------------------------------------------ SNAKE DISPLAY
 def Snake():
     led = 0
     while led < 60: #Consider all rows at the same time (60 leds in one row)
@@ -317,7 +317,7 @@ def Snake():
         client.put_pixels(led_wall) #Place latest frame on led screen 
         led = led + 1
 
-# -------------------------------------------------------- TETRIS DISPLAY
+# ------------------------------------------------------------ TETRIS DISPLAY
 def Tetris():
     led = 0
     while led < 60: #Consider all rows at the same time (60 leds in one row)
@@ -344,8 +344,8 @@ def Tetris():
         client.put_pixels(led_wall) #Place latest frame on led screen 
         led = led + 1
 
-# -------------------------------------------------------- 3, 2, 1, GO! DISPLAY
-# --------------- 3 Function
+# ------------------------------------------------------------- 3, 2, 1, GO! DISPLAY
+# -------------------------------------------------------- 3 Function
 def Three():
     led = 0
     while led < 60: #Consider all rows at the same time (60 leds in one row)
@@ -357,7 +357,7 @@ def Three():
         client.put_pixels(led_wall) #Place latest frame on led screen
         led = led + 1
 
-# --------------- 2 Function
+# ------------------------------------------------------- 2 Function
 def Two():
     led = 0
     while led < 60: #Consider all rows at the same time (60 leds in one row)
@@ -370,7 +370,7 @@ def Two():
                 led_wall[led + rows*60] = (255,255,255) #Give RGB value to those leds
         client.put_pixels(led_wall) #Place latest frame on led screen 
         led = led + 1
-# --------------- 1 Function
+# ----------------------------------------------------- 1 Function
 def One():
     led = 0
     while led < 60: #Consider all rows at the same time (60 leds in one row)
@@ -382,7 +382,7 @@ def One():
                 led_wall[led + rows*60] = (255,255,255) #Give RGB value to those leds
         client.put_pixels(led_wall) #Place latest frame on led screen 
         led = led + 1
-# --------------- GO! Function
+# ----------------------------------------------------- GO! Function
 def Go():
     led = 0
     while led < 60: #Consider all rows at the same time (60 leds in one row)
@@ -412,7 +412,9 @@ def Countdown():
     time.sleep(0.1) # for 1 second
     Clear() # Make screen all black
 
-# -------------------------------------------------------- WRONG ANSWER DISPLAY
+# ----------------------------------------------------------- WRONG ANSWER DISPLAY
+# ----------- Red LEDs will scoll (all six rows) from the extremities towards the middle.
+# ----------- When they will meet, a white Cross will appear in the middle, signaling the answer was wrong.
 def Wrong():
     led = 0
     while led<30: #Consider all rows at the same time, but only until the middle of display
@@ -433,6 +435,8 @@ def Wrong():
     client.put_pixels(led_wall) #Place latest frame on led screen 
         
 # -------------------------------------------------------- RIGHT ANSWER DISPLAY
+# ----------- Green LEDs will scoll (all six rows) from the extremities towards the middle.
+# ----------- When they will meet, a white tick icon will appear in the middle, signaling the answer was right.
 def Right():
     led = 0
     while led < 30: #Consider all rows at the same time, but only until the middle of display
@@ -453,6 +457,7 @@ def Right():
     client.put_pixels(led_wall) #Place latest frame on led screen 
 
 # --------------- Sad Function (For LOSER)
+# ----------- Sad red face emojy 
 def Sad():
     led=  0
     while led < 60: #Consider all rows at the same time (60 leds in one row)
@@ -467,6 +472,7 @@ def Sad():
     client.put_pixels(led_wall) #Place latest frame on led screen 
 
 # --------------- Happy Function (For Winner)
+# ----------- Happy blue face emojy
 def Happy():
     led = 0
     while led < 60: #Consider all rows at the same time (60 leds in one row)
@@ -480,7 +486,8 @@ def Happy():
         led = led + 1
     client.put_pixels(led_wall)
             
-# -------------------------------------------------------- LOSER DISPLAY (To fix)
+# -------------------------------------------------------- LOSER DISPLAY
+# ----------- Sad emojy with fading background, If user loses
 def Lose():
     Sad()
     fade = 10
@@ -499,6 +506,7 @@ def Lose():
         client.put_pixels(led_wall) #Place latest frame on led screen 
         time.sleep(0.1) #delay
 # -------------------------------------------------------- WINNER DISPLAY
+# ----------- Happy emojy with fading background, If user wins
 def Win():
     Happy()
     fade = 10
@@ -518,7 +526,101 @@ def Win():
         time.sleep(0.1) #delay 
         client.put_pixels(led_wall) #Place latest frame on led screen
 
+#------------------------------------------------------------- FUNCTIONS for EVIL BALL
+#---------------------------------- Function for Ball (4 movement total to increase smoothness of animation)
+#------- In order to roll the animation forward, a parameter has been added to the functions,
+#------- which will later help us in the for loop (main code)
+#---------------------------------------------------------- Function for Ball on the ground
+def Ball_Down(x): # Ball on the ground (descending trail)
+    led = 0
+    while led < 60:
+        for rows in range(6): # Divide by rows
+          
+            if ((led > (5 +x) and led < (8 +x)) and (rows==3 or rows==5) or
+                ((led >(4 +x) and led < (9 + x) ) and rows == 4)):
+                led_wall[led+rows*60] = (204,102,0) #Ball body
+            if ((led == (2 + x) and rows == 3) or (led == (4 + x)  and rows == 2) or
+                (led == (3 +x) and (rows == 1 or rows == 4))):
+                led_wall[led+rows*60] = (255,255,255) # Movement trails
+        led = led + 1
+        client.put_pixels(led_wall) # Display leds
+#----------------------------------------------------------- Function for Ball up high
+def Ball_Up(y): # Ball up in the air (ascneding trail)
+    led = 0
+    while led < 60:
+        for rows in range(6): # Divide by rows
+            if ((led > (11+y) and led < (14+y)) and (rows==0 or rows==2) or
+                ((led > (10+y) and led < (15+y)) and rows == 1)):
+                led_wall[led+rows*60] = (204,102,0) #Ball body
+            if ((led == (8+y) and rows == 2) or (led == (10+y) and rows == 3) or
+                (led == (9+y) and (rows == 1 or rows == 4))):
+                 led_wall[led+rows*60] = (255,255,255) #Movement trails
+        led = led + 1
+        client.put_pixels(led_wall) # Display leds
+#---------------------------------------------------------- Function for Ball mid air, going up
+def Ball_Mid_Up(w): # Ball mid air (ascending trail)
+    led = 0
+    while led < 60:
+        for rows in range(6): # Divide by rows
+            if ((led > (8+w) and led < (11+w)) and (rows==1 or rows==3) or
+                ((led > (7+w) and led < (12+w)) and rows ==2 )):
+                led_wall[led+rows*60] = (204,102,0) #Ball body
+            if (((led == (6+w) or led == (9+w)) and rows ==4 ) or (led == (7+w) and rows ==3 ) or
+                (led == (8+w) and rows == 5)):
+                 led_wall[led+rows*60] = (255,255,255) #Movement trails
+        led = led + 1
+        client.put_pixels(led_wall) # Display leds
 
+#---------------------------------------------------------- Function for Ball mid air, going down
+def Ball_Mid_Down(z): # Ball mid air (descending trail)
+    led = 0
+    while led < 60:
+        for rows in range(6):
+            if ((led > (14+z) and led < (17+z)) and (rows==2 or rows==4) or
+                ((led > (13+z) and led < (18+z)) and rows ==3 )):
+                led_wall[led+rows*60] = (204,102,0) #Ball body
+            if ((led == (12+z) and rows ==2 ) or (led == (14+z) and rows ==1 ) or
+                (led == (13+z) and (rows ==0  or rows ==3 ))):
+                 led_wall[led+rows*60] = (255,255,255) #Movement trails
+        led = led + 1
+        client.put_pixels(led_wall)
+
+#------------------------------------------------------------------ STICKMAN ANIMATIONS
+#---------------------------------------------------------- Function for Stickman position 1
+def Stickman_Run(k): # Running Stickman (one leg up, other leg down)
+    led = 0
+    while led<60:
+        for rows in range(6): # Divide by rows
+            if ((led > (11+k) and led < (14+k)) and (rows == 0 or rows == 1)):
+                led_wall[led+rows*60] = (255,153,204) #pink face
+            if ((led == (12+k) and (rows == 2 or rows == 3))):
+                 led_wall[led+rows*60] = (0,255,0) #Shirt green
+            if (((led == (10+k) or led == (14+k)) and rows == 1) or
+                ((led == (11+k) or led == (13+k)) and rows == 2)):
+                led_wall[led+rows*60] = (102,255,105) # Green sleeves
+            if ((led == (11+k) and (rows == 4 or rows == 5)) or
+                ((led > (12+k) and led < (15+k)) and rows == 4)):
+                led_wall[led+rows*60] = (0,0,255) # pants
+        led = led + 1
+        client.put_pixels(led_wall) # Display leds
+
+#---------------------------------------------------------- Function for Stickman position 2
+def Stickman_Rest(j): # Running Stickman (other leg up, one down - opposite of Stickman_Run)
+    led = 0
+    while led < 60:
+        for rows in range(6): #Divide by rows
+            if ((led >(15+j) and led <(18+j)) and (rows ==0 or rows ==1)):
+                led_wall[led+rows*60] = (255,153,204) #pink face
+            if ((led == (16+j) and (rows == 2 or rows == 3))):
+                 led_wall[led+rows*60] = (0,255,0) # Green t-shirt
+            if (((led == (14+j) or led == (18+j)) and rows == 3) or
+                ((led == (15+j) or led == (17+j)) and rows == 2)):
+                led_wall[led+rows*60] = (102,255,105) # Green sleeves
+            if ((led == (17+j) and (rows == 4 or rows == 5)) or
+                ((led > (13+j) and led < (16+j)) and rows == 4)):
+                led_wall[led+rows*60] = (0,0,255) # pants
+        led = led + 1
+        client.put_pixels(led_wall) # Display leds
 
 #------------------------------------------------------------------------------------------
 
@@ -535,11 +637,13 @@ s = 1.0 # Maximum Color
 v = 1.0 # Maximum Brightness
 score = 0 # Valriable to store Score (Animation 2 - Guess The Game)
 
+# ------------------------------------------ Below, a user input is required. User can input a number from 1 to 6, choosing the respective animation
+
 print('''\t Hi! Welcome to my video presentation! \n\t Which animation would you like to see?")
       \t\t\t ________________________________________________________
       \t\t\t|                        \t                         |
       \t\t\t|                        \t                         |
-      \t\t\t|    1) Favorite Color   \t 4) Animation 4     |
+      \t\t\t|    1) Favorite Color   \t 4) Evil Ball            |
       \t\t\t|                        \t                         |
       \t\t\t|    2) Guess the Game   \t 5) Animation 5          |
       \t\t\t|                        \t                         |
@@ -561,6 +665,8 @@ while True: #While running
         choice = input("Not a number! Please Select a whole number: ")
         #ask for correct input
 #---------------------------------------------------------------- ANIMATION 1: FAVORITE COLOR
+#-----------------------------------In this animation the user will be ask to choose the favorite color by selecting the respective number.
+#----------------------------------- As result, a rolling "wave" of the selected color will be (continuously) display in the simulator
 if choice == 1: # if input is 1: Play first anymation
     choice = input(''' Hello!
             What's your favourite colour?
@@ -669,6 +775,7 @@ if choice == 1: # if input is 1: Play first anymation
             client.put_pixels(led_wall)
             time.sleep(0.01)
 #-------------------------------------------------- ANIMATION 2: GUESS THE GAME
+#------------------------- In this animation, the user will play a guessing game, identifying some set still animation.
 if choice == 2:
     choice = input('''\t\t\t Welcome to GUESS THE GAME!
         You will see a series of recreated images on the LED display.
@@ -782,6 +889,7 @@ if choice == 2:
                 time.sleep(0.1)
 
 #-------------------------------------------------- ANIMATION 3: CHRISTMAS LIGHTS
+#------------------------ In this animation a set of few animation will be displayed.
 if choice == 3:
 #------------------------------------------ Pattern 1 - Random Colors (from 1 to 360)
     while True: # Keep running (whole animation keeps looping)
@@ -936,3 +1044,29 @@ if choice == 3:
             Tree_on() # Send christmas tree animation (on)
             time.sleep(0.7)# wait
             Clear() # clear screen again
+#---------------------------------------------------------------- ANIMATION 4: EVIL BALL
+#-------- This animation will display a man, running away from a bouncing ball
+if choice == 4:
+    print("This guy really doesn't like sports")
+#------- The loop will multiplicate functions parameters (exponential)
+#------- Creating a scrolling, running effect for both ball and Stickman
+    while True: # Keep running
+        for i in range(5): # iterate 5 times (then repeats)
+            Ball_Down(i*11)# 1i*11, 2i*11, 3i*11....
+            Stickman_Run(i*11)# 1i*11, 2i*11, 3i*11....
+            time.sleep(0.5)# Minimum value that sllep can have without crashing the animation
+            Clear()# Make screen all black
+            Ball_Mid_Up(i*11) # 1i*11, 2i*11, 3i*11....
+            Stickman_Rest(i*11) # 1i*11, 2i*11, 3i*11....
+            time.sleep(0.5) # wait
+            Clear() # Clear screen (all black)
+            Ball_Up(i*11) # 1i*11, 2i*11, 3i*11....
+            Stickman_Run(i*11+6)# Since the Stickman has only 2 functions,
+                                # And they needed to be moved further: 18*11+6, 2i*11+6....
+            time.sleep(0.5) # wait
+            Clear() # clear screen (all black)
+            Ball_Mid_Down(i*11) # 1i*11, 2i*11, 3i*11....
+            Stickman_Rest(i*11+6)# # 1i*11+6, 2i*11+6, 3i*11+6....
+            time.sleep(0.5) # wait
+            Clear() # clear screen
+    
