@@ -11,8 +11,46 @@ def Clear():
     for led in range(360): # All leds
         led_wall[led] = (0,0,0) # Make them black
         led = led + 1
+#------------------------------------------------------------- FUNCTIONS for Favorite Color
+def Wave(x,y,z):
+    led_wall = [(0,0,0)]*360
+    for led in range(60): # Consider 60 LEDs (total of one row)
+        rgb = (x*abs(math.sin(led/54) - 0.5),y*abs(math.sin(led/54) - 0.5),z*abs(math.sin(led/54) - 0.5)) #math.sin returns sine of a number()
+        for rows in range(6): # Divide rows
+            led_wall[led + rows*60] = rgb # Assign above values to main list of tuples
 
+    while True:
+        led_wall = numpy.roll(led_wall, 3) # Roll tuple by 3
+        client.put_pixels(led_wall)
+        time.sleep(0.01)
+        
 #------------------------------------------------------------- FUNCTIONS for CHRISTMAS LIGHTS
+#-------------------------------------------------------- Function for Transaction Effect (from Middle to Extremities)
+def Curtains_Mid(x,y,z): # Parameters for R, G, B, so same Effect can be set at different colors.
+    led = 0
+    while led <30: #Consider all rows at the same time, but screen is divided in two sections (right and left)
+        for led in range(30):
+            shade = (x*((led/10)-0.2),y*((led/10)-0.2),z*((led/10)-0.2)) # New tuple with values for fading
+            for rows in range(6): # divide by rows
+                led_wall[29-led+rows*60] = shade # Assign new values to main list of tuples
+                led_wall[30+led+rows*60] = shade
+            led = led + 1
+            client.put_pixels(led_wall) # Display
+            time.sleep(0.1)
+            
+#-------------------------------------------------------- Function for Transaction Effect (from Extremities to Middle)
+def Curtains_Out(x,y,z):
+    led = 0
+    while led <30: #Consider all rows at the same time, but screen is divided in two sections (right and left)
+        for led in range(30):
+            shade = (x*((led/10)-0.2),y*((led/10)-0.2),z*((led/10)-0.2)) # New tuple with values for fading
+            for rows in range(6): # divide by rows
+                led_wall[led+rows*60] = shade # Assign new values to main list of tuples
+                led_wall[59-led+rows*60] = shade
+            led = led + 1
+            client.put_pixels(led_wall) # Display
+            time.sleep(0.1)
+
 #-------------------------------------------------------- Function for DNA pattern
 def DNA():
     led = 0
@@ -416,15 +454,8 @@ def Countdown():
 # ----------- Red LEDs will scoll (all six rows) from the extremities towards the middle.
 # ----------- When they will meet, a white Cross will appear in the middle, signaling the answer was wrong.
 def Wrong():
-    led = 0
-    while led<30: #Consider all rows at the same time, but only until the middle of display
-        for rows in range(6): #Divide by 6 rows
-            led_wall[led + rows*60] = (255,0,0) # Red LEDs
-            led_wall[59-led + rows*60] = (255,0,0) # Red LEDs
-        client.put_pixels(led_wall) #Place latest frame on led screen 
-        time.sleep(0.1)
-        led = led + 1
-
+    Curtains_Mid(255,0,0) #Transaction Effect - Red, fading in the middle (So tick is more visible)
+    led = 27
     for rows in range(6): # Will create a diagonal line, crossing all 6 rows, such as \
         led_wall[led + rows*60] = (255,255,255) #Give RGB value to those leds
         led = led + 1
@@ -438,15 +469,8 @@ def Wrong():
 # ----------- Green LEDs will scoll (all six rows) from the extremities towards the middle.
 # ----------- When they will meet, a white tick icon will appear in the middle, signaling the answer was right.
 def Right():
-    led = 0
-    while led < 30: #Consider all rows at the same time, but only until the middle of display
-        for rows in range(6): #Divide by 6 rows
-            led_wall[led + rows*60] = (0,255,0) #Give RGB value to leds from 0 to 30
-            led_wall[59-led + rows*60] = (0,255,0)#Give RGB value leds from 60 to 30
-        client.put_pixels(led_wall) #Place latest frame on led screen 
-        time.sleep(0.1)
-        led = led + 1
-
+    Curtains_Mid(0,255,0) #Transaction Effect - Green, fading in the middle (So tick is more visible)
+    led = 30
     for rows in range(6): # Will create a diagonal line, crossing all 6 rows, such as /
         led_wall[led+4 + rows*60] = (255,255,255) #Give RGB value to those leds
         led = led - 1
@@ -688,93 +712,31 @@ if choice == 1: # if input is 1: Play first anymation
             choice = input("Not a number! Please insert the number corresponding to you favourite color: ")
 
     if choice == 1: #GREEN (All rows scrolling)
-        for led in range(60): # Consider 60 LEDs (total of one row)
-            rgb = (0, 255 * abs(math.sin(led/54) - 0.5), 0) #math.sin returns sine of a number()
-            for rows in range(6): # Divide rows
-                led_wall[led + rows*60] = rgb # Assign above values to main list of tuples
-
-        while True:
-            led_wall = numpy.roll(led_wall, 3) # Roll tuple by 3
-            client.put_pixels(led_wall)
-            time.sleep(0.01)
+        Wave(0,255,0)
 
     if choice == 2: # PURPLE (All rows scrolling)
-        for led in range(60): # Consider 60 LEDs (total of one row)
-            rgb = (127 * abs(math.sin(led/54) - 0.5), 0, 255 * abs(math.sin(led/54) - 0.5)) #math.sin returns sine of a number()
-            for rows in range(6): # Divide rows
-                led_wall[led + rows*60] = rgb # Assing above values to main list of tuples
-
-        while True:
-            led_wall = numpy.roll(led_wall, 3) # Roll tuple by 3
-            client.put_pixels(led_wall)
-            time.sleep(0.01)
+        Wave(127,0,255)
             
     if choice == 3: # BLUE (All rows scrolling)
-        for led in range(60): # Consider 60 LEDs (total of one row)
-            rgb = (0, 0, 255 * abs(math.sin(led/54) - 0.5)) #math.sin returns sine of a number()
-            for rows in range(6): # Divide rows
-                led_wall[led + rows*60] = rgb # Assing above values to main list of tuples
-
-        while True:
-            led_wall = numpy.roll(led_wall, 3) # Roll tuple by 3
-            client.put_pixels(led_wall)
-            time.sleep(0.01)
+        Wave(0,0,255)
 
     if choice == 4: # GREY (All rows scrolling)
-        for led in range(60): # Consider 60 LEDs (total of one row)
-            rgb = (150 * abs(math.sin(led/54) - 0.5), 150 * abs(math.sin(led/54) - 0.5), 150 * abs(math.sin(led/54) - 0.5)) #math.sin returns sine of a number()
-            for rows in range(6): # Divide rows
-                led_wall[led + rows*60] = rgb # Assing above values to main list of tuples
-
-        while True:
-            led_wall = numpy.roll(led_wall, 3) # Roll tuple by 3
-            client.put_pixels(led_wall)
-            time.sleep(0.01)
+        Wave(150,150,150)
 
     if choice == 5: # RED (All rows scrolling)
-        for led in range(60): # Consider 60 LEDs (total of one row)
-            rgb = (255 * abs(math.sin(led/54) - 0.5), 0, 0) #math.sin returns sine of a number()
-            for rows in range(6): # Divide rows
-                led_wall[led + rows*60] = rgb # Assing above values to main list of tuples
-
-        while True:
-            led_wall = numpy.roll(led_wall, 3) # Roll tuple by 3
-            client.put_pixels(led_wall)
-            time.sleep(0.01)
+        Wave(255,0,0)
 
     if choice == 6: # YELLOW (All rows scrolling)
-        for led in range(60): # Consider 60 LEDs (total of one row)
-            rgb = (255 * abs(math.sin(led/54) - 0.5), 255 * abs(math.sin(led/54) - 0.5), 0) #math.sin returns sine of a number()
-            for rows in range(6): # Divide rows
-                led_wall[led + rows*60] = rgb # Assing above values to main list of tuples
+        Wave(255,255,0)
 
-        while True:
-            led_wall = numpy.roll(led_wall, 3) # Roll tuple by 3
-            client.put_pixels(led_wall)
-            time.sleep(0.01)
 
     if choice == 7: # ORANGE (All rows scrolling)
-        for led in range(60): # Consider 60 LEDs (total of one row)
-            rgb = (255 * abs(math.sin(led/54) - 0.5), 128 * abs(math.sin(led/54) - 0.5), 0) #math.sin returns sine of a number()
-            for rows in range(6): # Divide rows
-                led_wall[led + rows*60] = rgb # Assing above values to main list of tuples
-
-        while True:
-            led_wall = numpy.roll(led_wall, 3) # Roll tuple by 3
-            client.put_pixels(led_wall)
-            time.sleep(0.01)
+        Wave(255,128,0)
 
     if choice == 8: # PINK (All rows scrolling)
-        for led in range(60): # Consider 60 LEDs (total of one row)
-            rgb = (255 * abs(math.sin(led/54) - 0.5), 102 * abs(math.sin(led/54) - 0.5), 178 * abs(math.sin(led/54) - 0.5)) #math.sin returns sine of a number()
-            for rows in range(6): # Divide rows
-                led_wall[led + rows*60] = rgb # Assing above values to main list of tuples
+        Wave(255,102,178)
 
-        while True:
-            led_wall = numpy.roll(led_wall, 3) # Roll tuple by 3
-            client.put_pixels(led_wall)
-            time.sleep(0.01)
-#-------------------------------------------------- ANIMATION 2: GUESS THE GAME
+#--------------------------------------------------------------- ANIMATION 2: GUESS THE GAME
 #------------------------- In this animation, the user will play a guessing game, identifying some set still animation.
 if choice == 2:
     choice = input('''\t\t\t Welcome to GUESS THE GAME!
@@ -888,7 +850,7 @@ if choice == 2:
                 Lose() # playing losign animation
                 time.sleep(0.1)
 
-#-------------------------------------------------- ANIMATION 3: CHRISTMAS LIGHTS
+#----------------------------------------------------------------------------- ANIMATION 3: CHRISTMAS LIGHTS
 #------------------------ In this animation a set of few animation will be displayed.
 if choice == 3:
 #------------------------------------------ Pattern 1 - Random Colors (from 1 to 360)
@@ -920,57 +882,14 @@ if choice == 3:
             client.put_pixels(led_wall) # Display
             led = led + 1
 
-    #------------------------------------------ Pattern 3 - Reverse Curtains: Reverse fading from inner screen to extremities(1-Purple 2-Orange)
-        led = 0
-        while led < 30: #Consider all rows at the same time, but screen is divided in two sections (right and left)
-            for led in range(30):
-                        # PURPLE LEDS (fading)
-                shade = (102 * ((led/10) - 0.2), 0, 204 * ((led/10) - 0.2)) # New tuple with values for fading
-                for rows in range(6): # divide by rows
-                    led_wall[29-led + rows*60] = shade # Assign new values to main list of tuples
-                    led_wall[30+led + rows*60] = shade
-                led = led + 1
-                client.put_pixels(led_wall) # Display
-                time.sleep(0.1)
+    #------------------------------------------ Pattern 3 - Reverse Curtains: Reverse fading from inner screen to extremities
+        Curtains_Mid(102,0,204) #Purple fading
+        Curtains_Mid(255,128,0) #Orange fading
 
-        led = 0
-        while led < 30: #Consider all rows at the same time, but screen is divided in two sections (right and left)
-            for led in range(30):
-                        # ORANGE LEDS (Fading)
-                shade2 = (255 * ((led/10) - 0.2),128 * ((led/10) - 0.2),0) # New tuple with values for fading
-                for rows in range(6): # divide by rows
-                    led_wall[29-led + rows*60] = shade2 # Assign new values to main list of tuples
-                    led_wall[30+led + rows*60] = shade2
-                led = led + 1
-                client.put_pixels(led_wall) # Display
-                time.sleep(0.1)
-
-    #------------------------------------------ Pattern 4 - Curtains: Fading from screen's extremities to inner part ( Right = Blue ; Left = Green)
-        led = 0
-        while led < 30: #Consider all rows at the same time, but screen is divided in two sections (right and left)
-            for led in range(30):
-                rgb = (0, 255 * abs(math.sin(led/60) - 0.5), 0) # New tuple with values for fading
-                rgb2 = (0, 0, 255 * abs(math.sin(led/60) - 0.5)) # New tuple with values for fading
-                for rows in range (6): # divide by rows
-                    led_wall[led + rows*60] = rgb # Assign new values to main list of tuples
-                    led_wall[59-led + rows*60] = rgb2 # Assign new values to main list of tuples
-                client.put_pixels(led_wall) # Display
-                led = led + 1
-                time.sleep(0.1)
-
-    #------------------------------------------ Pattern 5  - Curtains: Fading from screen's extremities to inner part ( Right = Green ; Left = Blue)
-        led = 0
-        while led < 30: #Consider all rows at the same time, but screen is divided in two sections (right and left)
-            for led in range(30):
-                rgb = (0, 0, 255 * abs(math.sin(led/60) - 0.5)) # New tuple with values for fading
-                rgb2 = (0, 255 * abs(math.sin(led/60) - 0.5), 0) # New tuple with values for fading
-                for rows in range (6): # divide by rows
-                    led_wall[led + rows*60] = rgb # Assign new values to main list of tuples
-                    led_wall[59-led + rows*60] = rgb2 # Assign new values to main list of tuples
-                client.put_pixels(led_wall) # Display
-                led = led + 1
-                time.sleep(0.1)
-    #------------------------------------------ Pattrn 6 - Gray and Pink Chess Board Pattern
+    #------------------------------------------ Pattern 4 - Curtains: Fading from screen's extremities, reaching full color at the inner part
+        Curtains_Out(0,255,0) #Green
+        Curtains_Out(0,0,255) #Blue
+    #------------------------------------------ Pattrn 5 - Gray and Pink Chess Board Pattern
         led = 0
         while led < 60: #Consider all rows at the same time (60 leds in one row)
             for rows in range(6): # divide by rows
@@ -988,7 +907,7 @@ if choice == 3:
             led = led + 1
             time.sleep(0.1)
 
-    #------------------------------------------ Pattern 7 - Rolling Alternating Rows (0 and Even = Green ; Odd = Orange/Yellow)
+    #------------------------------------------ Pattern 6 - Rolling Alternating Rows (0 and Even = Green ; Odd = Orange/Yellow)
         for led in range(60): # Consider all leds in row (all rows scrolling) 
             for rows in range(6): # divide by rows
                 if rows %2:
@@ -1036,8 +955,7 @@ if choice == 3:
             if time.time() > end_time: # Check, if delay has already passed
                 break # End the loop
     #------------------------------------------Pattern 8 - Blinking Christmas Tree
-        num = 5
-        for x in range(num): # The loop will repeat the animation 5 times
+        for x in range(5): # The loop will repeat the animation 5 times
             Clear() # Clear screen (all black)
             Tree_off() # Send christmas tree animation (off first)
             time.sleep(0.7) # wait

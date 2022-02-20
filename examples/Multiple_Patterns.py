@@ -222,8 +222,7 @@ while True: # Keep running (whole animation keeps looping)
         if time.time() > end_time: # Check, if delay has already passed
             break # End the loop
 #------------------------------------------Pattern 8 - Blinking Christmas Tree
-    num = 5
-    for x in range(num): # The loop will repeat the animation 5 times
+    for x in range(5): # The loop will repeat the animation 5 times
         Clear() # Clear screen (all black)
         Tree_off() # Send christmas tree animation (off first)
         time.sleep(0.7) # wait
