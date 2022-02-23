@@ -7,6 +7,20 @@ def Clear():
     for led in range(360): # for all leds
         led_wall[led] = (0,0,0) #make them black
         led = led + 1
+
+def game(x,y):
+    global score
+    choice = input("Which game is this? ")
+    if choice == str(x) or str(y):
+        Right()
+        time.sleep(1)
+        print("Correct")
+        score = score + 1
+    else:
+        Wrong()
+        time.sleep(1)
+        print("Oh no! That's wrong")
+    return score
 # -------------------------------------------------------- SUPER MARIO DISPLAY
 # --------------- Mario Function
 def  Mario():     
@@ -463,6 +477,7 @@ client.put_pixels(led_wall) #Place frame on led screen
 time.sleep(0.1) #delay
 score = 0 #Variable to kkep score of the guesses
 
+
 choice = input('''\t\t\t Welcome to GUESS THE GAME!
         You will see a series of recreated images on the LED display.
         Please identify the videogame and type in your answer.
@@ -490,7 +505,45 @@ if choice == 'Yes' or choice == 'yes': # If yes, start animations
         time.sleep(1)
         Clear()
         #------------Guess First Animation (Pacman)
-        Pacman() # Send pacman leds
+        Pacman()
+        game("Pacman","pacman")
+        Clear()
+        Countdown()
+        time.sleep(1)
+        #----------- Guess Second Animation (Pokemon)
+        Pokemon()
+        game('Pokemon', 'pokemon')
+        Clear()
+        Countdown()
+        time.sleep(1)
+        #--------------- Guess Third Animation (Super Mario)
+        Super_Mario()
+        game('Super mario', 'super mario')
+        Clear()
+        Countdown()
+        time.sleep(1)
+        #--------------- Guess Fourth Animation (Tetris)
+        Tetris()
+        game('Tetris', 'tetris')
+        Clear()
+        Countdown()
+        time.sleep(1)
+        #--------------- Guess Fifth Animation (Snake)
+        Snake()
+        game('Snake', 'snake')
+        Clear()
+
+        if score > 2: # if the score is at least 3/5
+            Clear() # clear screen
+            print("Congrats! You won!") # print 'you won'
+            Win() # play winning animation
+            time.sleep(0.1)
+        else: # if the score is below 3/5 (not possible to be over 5)
+            Clear() # clear screen
+            print(" Whoops! You lost! Better luck next time") # print ' you lost'
+            Lose() # playing losign animation
+            time.sleep(0.1)
+        '''Pacman() # Send pacman leds
         choice = input("Which game is this? ") # ask for input
         if choice == 'Pacman' or choice == 'pacman': # if answer is correct
             Right() # Play Right animation
@@ -572,4 +625,4 @@ if choice == 'Yes' or choice == 'yes': # If yes, start animations
             Clear() # clear screen
             print(" Whoops! You lost! Better luck next time") # print ' you lost'
             Lose() # playing losign animation
-            time.sleep(0.1)
+            time.sleep(0.1)'''

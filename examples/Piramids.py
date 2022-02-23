@@ -22,9 +22,9 @@ def Triangle(*argv):
     step = int(argv[3])
     for rows in range(start,stop,step):
         for i in range (3-rows):
-            R = random.randint(i-20,i+360) #3 different variable, cause if I would have use only R, colors would have been only shades of grey
-            G = random.randint(i-20,i+360)
-            B = random.randint(i-20,i+360)
+            R = random.randint(i,i+360) #3 different variable, cause if I would have use only R, colors would have been only shades of grey
+            G = random.randint(i,i+360)
+            B = random.randint(i,i+360)
             led_wall[led+(i+rows)*60] = (R,G,B)
             led_wall[240-led+(i+rows)*60] = (R,G,B)
         led+=1

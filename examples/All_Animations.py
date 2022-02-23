@@ -18,11 +18,14 @@ def Wave(x,y,z):
         rgb = (x*abs(math.sin(led/54) - 0.5),y*abs(math.sin(led/54) - 0.5),z*abs(math.sin(led/54) - 0.5)) #math.sin returns sine of a number()
         for rows in range(6): # Divide rows
             led_wall[led + rows*60] = rgb # Assign above values to main list of tuples
-
+    delay = 8 # Variable storing 8 seconds delay
+    end_time = time.time()+delay # Variable for current time + set delay
     while True:
         led_wall = numpy.roll(led_wall, 3) # Roll tuple by 3
         client.put_pixels(led_wall)
         time.sleep(0.01)
+        if time.time() > end_time:
+            break
         
 #------------------------------------------------------------- FUNCTIONS for CHRISTMAS LIGHTS
 #-------------------------------------------------------- Function for Transaction Effect (from Middle to Extremities)
@@ -515,6 +518,8 @@ def Happy():
 def Lose():
     Sad()
     fade = 10
+    delay = 10
+    end_time = time.time() + delay
     while True:
         for leds in enumerate(led_wall): #Creates a list of tuples with index and contents of elements
   
@@ -529,11 +534,16 @@ def Lose():
         Sad()
         client.put_pixels(led_wall) #Place latest frame on led screen 
         time.sleep(0.1) #delay
+        if time.time() > end_time: # Check if time passed is higher than end_time
+            break # break the loop
+
 # -------------------------------------------------------- WINNER DISPLAY
 # ----------- Happy emojy with fading background, If user wins
 def Win():
     Happy()
     fade = 10
+    delay = 10
+    end_time = time.time() + delay
     while True:
         for leds in enumerate(led_wall): #Creates a list of tuples with index and contents of elements
          
@@ -549,7 +559,8 @@ def Win():
         Happy()     
         time.sleep(0.1) #delay 
         client.put_pixels(led_wall) #Place latest frame on led screen
-
+        if time.time() > end_time: #Check if time passed is higher than end_time
+            break # Break the loop
 #------------------------------------------------------------- FUNCTIONS for EVIL BALL
 #---------------------------------- Function for Ball (4 movement total to increase smoothness of animation)
 #------- In order to roll the animation forward, a parameter has been added to the functions,
@@ -662,329 +673,338 @@ v = 1.0 # Maximum Brightness
 score = 0 # Valriable to store Score (Animation 2 - Guess The Game)
 
 # ------------------------------------------ Below, a user input is required. User can input a number from 1 to 6, choosing the respective animation
+while True:
+    print('''\t Hi! Welcome to my video presentation! \n\t Which animation would you like to see?")
+          \t\t ________________________________________________________
+          \t|                        \t                         |
+          \t|                        \t                         |
+          \t|    1) Favorite Color   \t 4) Evil Ball            |
+          \t|                        \t                         |
+          \t|    2) Guess the Game   \t 5) Animation 5          |
+          \t|                        \t                         |
+          \t|    3) Christmas Lights \t 6) Animation 6          |
+          \t|                        \t                         |
+          \t|________________________________________________________|''')
 
-print('''\t Hi! Welcome to my video presentation! \n\t Which animation would you like to see?")
-      \t\t\t ________________________________________________________
-      \t\t\t|                        \t                         |
-      \t\t\t|                        \t                         |
-      \t\t\t|    1) Favorite Color   \t 4) Evil Ball            |
-      \t\t\t|                        \t                         |
-      \t\t\t|    2) Guess the Game   \t 5) Animation 5          |
-      \t\t\t|                        \t                         |
-      \t\t\t|    3) Christmas Lights \t 6) Animation 6          |
-      \t\t\t|                        \t                         |
-      \t\t\t|________________________________________________________|''')
+    choice = input("\n\t Please select a number from above: ") # user input
 
-choice = input("\n\t Please select a number from above: ") # user input
-
-while True: #While running
-    if choice.isdigit() == True: # If the input is a number
-        choice = int(choice)
-        if choice <= 0 or choice > 6: #if number selected smaller or bigger than the ones available:
-            choice = input("This number in not displayed! Please select a whole number from the list: ")
-            continue # Continue and ask for correct input
-        else: #Otherwise
-            break #Interrupt the loop
-    else: # If the input is not a number:
-        choice = input("Not a number! Please Select a whole number: ")
-        #ask for correct input
-#---------------------------------------------------------------- ANIMATION 1: FAVORITE COLOR
-#-----------------------------------In this animation the user will be ask to choose the favorite color by selecting the respective number.
-#----------------------------------- As result, a rolling "wave" of the selected color will be (continuously) display in the simulator
-if choice == 1: # if input is 1: Play first anymation
-    choice = input(''' Hello!
-            What's your favourite colour?
-            1) Green  \t 5) Red
-            2) Purple \t 6) Yellow
-            3) Blue   \t 7) Orange
-            4) Grey   \t 8) Pink \n Choose a number: ''')
-
-    while True:
-        if choice.isdigit() == True: #if the input is a number:
+    while True: #While running
+        if choice.isdigit() == True: # If the input is a number
             choice = int(choice)
-            if choice <= 0 or choice > 8: #if the number is not between 1 and 8:
-                choice = input("Please select a number from the list! \n What's your choice? ")
-                continue
-            else:
-                break
+            if choice <= 0 or choice > 6: #if number selected smaller or bigger than the ones available:
+                choice = input("This number in not displayed! Please select a whole number from the list: ")
+                continue # Continue and ask for correct input
+            else: #Otherwise
+                break #Interrupt the loop
+        else: # If the input is not a number:
+            choice = input("Not a number! Please Select a whole number: ")
+            #ask for correct input
+    #---------------------------------------------------------------- ANIMATION 1: FAVORITE COLOR
+    #-----------------------------------In this animation the user will be ask to choose the favorite color by selecting the respective number.
+    #----------------------------------- As result, a rolling "wave" of the selected color will be (continuously) display in the simulator
+    if choice == 1: # if input is 1: Play first anymation
+        choice = input(''' Hello!
+                What's your favourite colour?
+                1) Green  \t 5) Red
+                2) Purple \t 6) Yellow
+                3) Blue   \t 7) Orange
+                4) Grey   \t 8) Pink \n Choose a number: ''')
 
-        else:
-            choice = input("Not a number! Please insert the number corresponding to you favourite color: ")
-
-    if choice == 1: #GREEN (All rows scrolling)
-        Wave(0,255,0)
-
-    if choice == 2: # PURPLE (All rows scrolling)
-        Wave(127,0,255)
-            
-    if choice == 3: # BLUE (All rows scrolling)
-        Wave(0,0,255)
-
-    if choice == 4: # GREY (All rows scrolling)
-        Wave(150,150,150)
-
-    if choice == 5: # RED (All rows scrolling)
-        Wave(255,0,0)
-
-    if choice == 6: # YELLOW (All rows scrolling)
-        Wave(255,255,0)
-
-
-    if choice == 7: # ORANGE (All rows scrolling)
-        Wave(255,128,0)
-
-    if choice == 8: # PINK (All rows scrolling)
-        Wave(255,102,178)
-
-#--------------------------------------------------------------- ANIMATION 2: GUESS THE GAME
-#------------------------- In this animation, the user will play a guessing game, identifying some set still animation.
-if choice == 2:
-    choice = input('''\t\t\t Welcome to GUESS THE GAME!
-        You will see a series of recreated images on the LED display.
-        Please identify the videogame and type in your answer.
-        Be carefull, you will only get one chance!
-        \n\t\t\t\t GOOD LUCK!
-        \n\t Are You Ready to start? \t Please type 'Yes' or 'No'\n :''') #User input
-    while True: #Keep running
-        if (str(choice).isdigit()) == False: # If the input is not a number:
-            choice = str(choice)
-            if choice == 'No' or choice == 'no': # If answer is no:
-                choice = input("Whenever you are ready, please type 'Yes' \n :")
-                continue #Stay in the loop
-            if choice == 'Yes' or choice == 'yes': # If answer is yes:
-                break # end the loop
-            else: # If the input is something else
-                choice = input("Please select 'Yes' or 'No'. \n :")
-        else: # If the input si something else
-            choice = input("Please type 'Yes' or 'No")
-
-
-
-    if choice == 'Yes' or choice == 'yes': # If yes, start animations
         while True:
-            Countdown()
-            time.sleep(1)
-            Clear()
-            #------------Guess First Animation (Pacman)
-            Pacman() # Send pacman leds
-            choice = input("Which game is this? ") # ask for input
-            if choice == 'Pacman' or choice == 'pacman': # if answer is correct
-                Right() # Play Right animation
-                time.sleep(1)
-                print("Correct!") # print "Correct"
-                score = score + 1# add correct answer to the score
-            else: # if answer is wrong
-                Wrong() # play Wrong animation
-                time.sleep(1)
-                print("Oh no! That's wrong") # print "not correct"
-            Clear() # clear the screen (all black)
-            Countdown() # Start countdown before new animation
-            time.sleep(1)
-            #----------- Guess Second Animation (Pokemon)
-            Pokemon() # send Pokemon leds
-            choice = input("Which game is this? ") # ask for input
-            if choice == 'Pokemon' or choice == 'pokemon': # if answer is correct
-                Right() # Play Right animation
-                time.sleep(1)
-                print("Correct!") # print "Correct"
-                score = score + 1 # add correct answer to score
-            else: # if answer is wrong
-                Wrong() # play Wrong animation
-                time.sleep(1)
-                print("Oh no! That's wrong") # print "not correct"
-            Clear() # Clear screen ( all black)
-            Countdown() # Start countdown before new animation
-            time.sleep(1)
-            #--------------- Guess Third Animation (Super Mario)
-            Super_Mario() # send Super Mario leds
-            choice = input("Which game is this? ") # ask for input
-            if choice == 'Super Mario' or choice == 'super mario': # if answer is correct
-                Right() # Play Right animation
-                time.sleep(1)
-                print("Correct!") # print "Correct"
-                score = score + 1 # add correct answer to score
-            else: # if answer is wrong
-                Wrong() # play Wrong animation
-                time.sleep(1)
-                print("Oh no! That's wrong") # print "not correct"
-            Clear() # Clear screen ( all black)
-            Countdown() # Start countdown before new animation
-            time.sleep(1)
-            #--------------- Guess Fourth Animation (Tetris)
-            Tetris() # send Tetris leds
-            choice = input("Which game is this? ") # ask for input
-            if choice == 'Tetris' or choice == 'tetris': # if answer is correct
-                Right() # Play Right animation
-                time.sleep(1)
-                print("Correct!") # print "Correct"
-                score = score + 1# add correct answer to score
-            else: # if answer is wrong
-                Wrong() # play Wrong animation
-                time.sleep(1)
-                print("Oh no! That's wrong") # print "not correct"
-            Clear()# Clear screen ( all black)
-            Countdown()
-            time.sleep(1)
-            #--------------- Guess Fifth Animation (Snake)
-            Snake()
-            choice = input("Which game is this? ") # ask for input
-            if choice == 'Snake' or choice == 'snake': # if answer is correct
-                Right() #Play Right animation
-                time.sleep(1)
-                print("Correct!") # print "Correct"
-                score = score + 1 # add correct answer to score
-                
-            else: # if answer is wrong
-                Wrong() # play Wrong animation
-                time.sleep(1)
-                print("Oh no! That's wrong") # print "not correct"
-                
-            if score > 2: # if the score is at least 3/5
-                Clear() # clear screen
-                print("Congrats! You won!") # print 'you won'
-                Win() # play winning animation
-                time.sleep(0.1)
-            else: # if the score is below 3/5 (not possible to be over 5)
-                Clear() # clear screen
-                print(" Whoops! You lost! Better luck next time") # print ' you lost'
-                Lose() # playing losign animation
-                time.sleep(0.1)
-
-#----------------------------------------------------------------------------- ANIMATION 3: CHRISTMAS LIGHTS
-#------------------------ In this animation a set of few animation will be displayed.
-if choice == 3:
-#------------------------------------------ Pattern 1 - Random Colors (from 1 to 360)
-    while True: # Keep running (whole animation keeps looping)
-        for hue in range(360): #Consider all 360 leds
-            rgb_fract = colorsys.hsv_to_rgb(random.randint(hue-160,hue+160)/360.0, s, v) # Colorsys returns floats between 0 and 1
-            r_fl = rgb_fract[0] # Extract said floating point numbers
-            g_fl = rgb_fract[1]
-            b_fl = rgb_fract[2]
-
-            rgb = (r_fl*255, g_fl*255, b_fl*255) # Create new tuple with corrected values
-            led_wall[hue] = rgb # Assing above values to main list of tuples
-            client.put_pixels(led_wall) # Display
-            time.sleep(0.02)
-
-    #------------------------------------------ Pattern 2 - White and Red Stripes
-        led = 0
-        while led < 60: #Consider all rows at the same time (60 leds in one row)
-            if led % 2 == 0: # if led is in even pos
-                for line in range(6): # divide by rows
-                    led_wall[led + line*60] = (255, 255, 255) # Display White
-                    
-                    
-            else: # if led is in an odd pos
-                for line in range(6): # divide by rows
-                    led_wall[led + line*60] = (255, 0, 0) # Display Red
-                    
-            time.sleep(0.1)
-            client.put_pixels(led_wall) # Display
-            led = led + 1
-
-    #------------------------------------------ Pattern 3 - Reverse Curtains: Reverse fading from inner screen to extremities
-        Curtains_Mid(102,0,204) #Purple fading
-        Curtains_Mid(255,128,0) #Orange fading
-
-    #------------------------------------------ Pattern 4 - Curtains: Fading from screen's extremities, reaching full color at the inner part
-        Curtains_Out(0,255,0) #Green
-        Curtains_Out(0,0,255) #Blue
-    #------------------------------------------ Pattrn 5 - Gray and Pink Chess Board Pattern
-        led = 0
-        while led < 60: #Consider all rows at the same time (60 leds in one row)
-            for rows in range(6): # divide by rows
-                            # PINK LEDS
-                if ((not((rows+2)%2)) and (not led % 2)): 
-                    led_wall[59-led+rows*60] = (255,0,255)
-                            # White-ish LEDS
-                elif ((not((rows+2)%2)) and  led % 2):
-                    led_wall[59-led+rows*60] = (224,238,238)
-                elif (((rows+2)%2) and  led % 2):
-                    led_wall[59-led+rows*60] = (255,0,255)
+            if choice.isdigit() == True: #if the input is a number:
+                choice = int(choice)
+                if choice <= 0 or choice > 8: #if the number is not between 1 and 8:
+                    choice = input("Please select a number from the list! \n What's your choice? ")
+                    continue
                 else:
-                    led_wall[59-led+rows*60] = (224,238,238)
-            client.put_pixels(led_wall) # Display
-            led = led + 1
-            time.sleep(0.1)
+                    break
 
-    #------------------------------------------ Pattern 6 - Rolling Alternating Rows (0 and Even = Green ; Odd = Orange/Yellow)
-        for led in range(60): # Consider all leds in row (all rows scrolling) 
-            for rows in range(6): # divide by rows
-                if rows %2:
-                            # GREEN LEDS (Fading)
-                    led_wall[59-led+rows*60] = (128 * (led/30),255 * (led/30),0)
-                    client.put_pixels(led_wall)
-                    time.sleep(0.003)
-                else:
-                            # ORANGE LEDS (Fading)
-                    led_wall[led+rows*60] = (255 * (led/30),128 * (led/30),0)
-                    time.sleep(0.01)
-        delay = 8 # Variable storing 8 seconds delay
-        end_time = time.time()+delay # Variable for current time + set delay
+            else:
+                choice = input("Not a number! Please insert the number corresponding to you favourite color: ")
+
+        if choice == 1: #GREEN (All rows scrolling)
+            Wave(0,255,0)
+
+        if choice == 2: # PURPLE (All rows scrolling)
+            Wave(127,0,255)
+                
+        if choice == 3: # BLUE (All rows scrolling)
+            Wave(0,0,255)
+
+        if choice == 4: # GREY (All rows scrolling)
+            Wave(150,150,150)
+
+        if choice == 5: # RED (All rows scrolling)
+            Wave(255,0,0)
+
+        if choice == 6: # YELLOW (All rows scrolling)
+            Wave(255,255,0)
+
+
+        if choice == 7: # ORANGE (All rows scrolling)
+            Wave(255,128,0)
+
+        if choice == 8: # PINK (All rows scrolling)
+            Wave(255,102,178)
+
+    #--------------------------------------------------------------- ANIMATION 2: GUESS THE GAME
+    #------------------------- In this animation, the user will play a guessing game, identifying some set still animation.
+    if choice == 2:
+        choice = input('''\t\t\t Welcome to GUESS THE GAME!
+            You will see a series of recreated images on the LED display.
+            Please identify the videogame and type in your answer.
+            Be carefull, you will only get one chance!
+            \n\t\t\t\t GOOD LUCK!
+            \n\t Are You Ready to start? \t Please type 'Yes' or 'No'\n :''') #User input
+        while True: #Keep running
+            if (str(choice).isdigit()) == False: # If the input is not a number:
+                choice = str(choice)
+                if choice == 'No' or choice == 'no': # If answer is no:
+                    choice = input("Whenever you are ready, please type 'Yes' \n :")
+                    continue #Stay in the loop
+                if choice == 'Yes' or choice == 'yes': # If answer is yes:
+                    break # end the loop
+                else: # If the input is something else
+                    choice = input("Please select 'Yes' or 'No'. \n :")
+            else: # If the input si something else
+                choice = input("Please type 'Yes' or 'No")
+
+
+
+        if choice == 'Yes' or choice == 'yes': # If yes, start animations
+            while True:
+                Countdown()
+                time.sleep(1)
+                Clear()
+                #------------Guess First Animation (Pacman)
+                Pacman() # Send pacman leds
+                choice = input("Which game is this? ") # ask for input
+                if choice == 'Pacman' or choice == 'pacman': # if answer is correct
+                    Right() # Play Right animation
+                    time.sleep(1)
+                    print("Correct!") # print "Correct"
+                    score = score + 1# add correct answer to the score
+                else: # if answer is wrong
+                    Wrong() # play Wrong animation
+                    time.sleep(1)
+                    print("Oh no! That's wrong") # print "not correct"
+                Clear() # clear the screen (all black)
+                Countdown() # Start countdown before new animation
+                time.sleep(1)
+                #----------- Guess Second Animation (Pokemon)
+                Pokemon() # send Pokemon leds
+                choice = input("Which game is this? ") # ask for input
+                if choice == 'Pokemon' or choice == 'pokemon': # if answer is correct
+                    Right() # Play Right animation
+                    time.sleep(1)
+                    print("Correct!") # print "Correct"
+                    score = score + 1 # add correct answer to score
+                else: # if answer is wrong
+                    Wrong() # play Wrong animation
+                    time.sleep(1)
+                    print("Oh no! That's wrong") # print "not correct"
+                Clear() # Clear screen ( all black)
+                Countdown() # Start countdown before new animation
+                time.sleep(1)
+                #--------------- Guess Third Animation (Super Mario)
+                Super_Mario() # send Super Mario leds
+                choice = input("Which game is this? ") # ask for input
+                if choice == 'Super Mario' or choice == 'super mario': # if answer is correct
+                    Right() # Play Right animation
+                    time.sleep(1)
+                    print("Correct!") # print "Correct"
+                    score = score + 1 # add correct answer to score
+                else: # if answer is wrong
+                    Wrong() # play Wrong animation
+                    time.sleep(1)
+                    print("Oh no! That's wrong") # print "not correct"
+                Clear() # Clear screen ( all black)
+                Countdown() # Start countdown before new animation
+                time.sleep(1)
+                #--------------- Guess Fourth Animation (Tetris)
+                Tetris() # send Tetris leds
+                choice = input("Which game is this? ") # ask for input
+                if choice == 'Tetris' or choice == 'tetris': # if answer is correct
+                    Right() # Play Right animation
+                    time.sleep(1)
+                    print("Correct!") # print "Correct"
+                    score = score + 1# add correct answer to score
+                else: # if answer is wrong
+                    Wrong() # play Wrong animation
+                    time.sleep(1)
+                    print("Oh no! That's wrong") # print "not correct"
+                Clear()# Clear screen ( all black)
+                Countdown()
+                time.sleep(1)
+                #--------------- Guess Fifth Animation (Snake)
+                Snake()
+                choice = input("Which game is this? ") # ask for input
+                if choice == 'Snake' or choice == 'snake': # if answer is correct
+                    Right() #Play Right animation
+                    time.sleep(1)
+                    print("Correct!") # print "Correct"
+                    score = score + 1 # add correct answer to score
+                    
+                else: # if answer is wrong
+                    Wrong() # play Wrong animation
+                    time.sleep(1)
+                    print("Oh no! That's wrong") # print "not correct"
+                    
+                if score > 2: # if the score is at least 3/5
+                    Clear() # clear screen
+                    print("Congrats! You won!") # print 'you won'
+                    Win() # play winning animation
+                    time.sleep(0.1)
+                    break
+                else: # if the score is below 3/5 (not possible to be over 5)
+                    Clear() # clear screen
+                    print(" Whoops! You lost! Better luck next time") # print ' you lost'
+                    Lose() # playing losign animation
+                    time.sleep(0.1)
+                    break
+    #----------------------------------------------------------------------------- ANIMATION 3: CHRISTMAS LIGHTS
+    #------------------------ In this animation a set of few animation will be displayed.
+    if choice == 3:
+    #------------------------------------------ Pattern 1 - Random Colors (from 1 to 360)
+        main_delay = 30
+        main_end_time = time.time() + main_delay 
+        while True: # Keep running (whole animation keeps looping)
+            for hue in range(360): #Consider all 360 leds
+                rgb_fract = colorsys.hsv_to_rgb(random.randint(hue-160,hue+160)/360.0, s, v) # Colorsys returns floats between 0 and 1
+                r_fl = rgb_fract[0] # Extract said floating point numbers
+                g_fl = rgb_fract[1]
+                b_fl = rgb_fract[2]
+
+                rgb = (r_fl*255, g_fl*255, b_fl*255) # Create new tuple with corrected values
+                led_wall[hue] = rgb # Assing above values to main list of tuples
+                client.put_pixels(led_wall) # Display
+                time.sleep(0.02)
+
+        #------------------------------------------ Pattern 2 - White and Red Stripes
+            led = 0
+            while led < 60: #Consider all rows at the same time (60 leds in one row)
+                if led % 2 == 0: # if led is in even pos
+                    for line in range(6): # divide by rows
+                        led_wall[led + line*60] = (255, 255, 255) # Display White
+                        
+                        
+                else: # if led is in an odd pos
+                    for line in range(6): # divide by rows
+                        led_wall[led + line*60] = (255, 0, 0) # Display Red
+                        
+                time.sleep(0.1)
+                client.put_pixels(led_wall) # Display
+                led = led + 1
+
+        #------------------------------------------ Pattern 3 - Reverse Curtains: Reverse fading from inner screen to extremities
+            Curtains_Mid(102,0,204) #Purple fading
+            Curtains_Mid(255,128,0) #Orange fading
+
+        #------------------------------------------ Pattern 4 - Curtains: Fading from screen's extremities, reaching full color at the inner part
+            Curtains_Out(0,255,0) #Green
+            Curtains_Out(0,0,255) #Blue
+        #------------------------------------------ Pattrn 5 - Gray and Pink Chess Board Pattern
+            led = 0
+            while led < 60: #Consider all rows at the same time (60 leds in one row)
+                for rows in range(6): # divide by rows
+                                # PINK LEDS
+                    if ((not((rows+2)%2)) and (not led % 2)): 
+                        led_wall[59-led+rows*60] = (255,0,255)
+                                # White-ish LEDS
+                    elif ((not((rows+2)%2)) and  led % 2):
+                        led_wall[59-led+rows*60] = (224,238,238)
+                    elif (((rows+2)%2) and  led % 2):
+                        led_wall[59-led+rows*60] = (255,0,255)
+                    else:
+                        led_wall[59-led+rows*60] = (224,238,238)
+                client.put_pixels(led_wall) # Display
+                led = led + 1
+                time.sleep(0.1)
+
+        #------------------------------------------ Pattern 6 - Rolling Alternating Rows (0 and Even = Green ; Odd = Orange/Yellow)
+            for led in range(60): # Consider all leds in row (all rows scrolling) 
+                for rows in range(6): # divide by rows
+                    if rows %2:
+                                # GREEN LEDS (Fading)
+                        led_wall[59-led+rows*60] = (128 * (led/30),255 * (led/30),0)
+                        client.put_pixels(led_wall)
+                        time.sleep(0.003)
+                    else:
+                                # ORANGE LEDS (Fading)
+                        led_wall[led+rows*60] = (255 * (led/30),128 * (led/30),0)
+                        time.sleep(0.01)
+            delay = 8 # Variable storing 8 seconds delay
+            end_time = time.time()+delay # Variable for current time + set delay
+            while True: # Keep running
+                led_wall = numpy.roll(led_wall, 3) # Roll tuple by 3
+                client.put_pixels(led_wall) # Display
+                time.sleep(0.02)
+                if time.time() > end_time: # Check, if delay time already passed
+                    break # End the loop
+
+        #------------------------------------------Pattern 7 - Pink and Light Blue DNA
+            Clear() # Clear screen ( all black)
+            DNA() # Display DNA animation
+            led = 0
+            delay = 7 # variable for 7 seconds delay
+            end_time = time.time() + delay # variable for current time + delay
+            while True: # Keep running
+                led_wall_preshift = [] # Make new (empty) array for scrolling effect
+                led_wall_preshift.append(numpy.roll(led_wall[0:60], 3)) # add first row, rolling tuple by 3
+                led_wall_preshift.append(numpy.roll(led_wall[60:120], 3)) # add second row, rolling tuple by 3
+                led_wall_preshift.append(numpy.roll(led_wall[120:180], 3)) # add third row, rolling tuple by 3
+                led_wall_preshift.append(numpy.roll(led_wall[180:240], 3)) # add fouth row, rolling tuple by 3
+                led_wall_preshift.append(numpy.roll(led_wall[240:300], 3)) # add fifth row, rolling tuple by 3
+                led_wall_preshift.append(numpy.roll(led_wall[300:360], 3)) # add sixth row, rolling tuple by 3
+
+                led_wall = [] # empty main list
+
+                #Add all rows to main list
+                for x in led_wall_preshift:
+                    for y in x:
+                        led_wall.append(y)
+                                        
+                client.put_pixels(led_wall) # Display
+                time.sleep(0.1)
+                if time.time() > end_time: # Check, if delay has already passed
+                    break # End the loop
+        #------------------------------------------Pattern 8 - Blinking Christmas Tree
+            for x in range(5): # The loop will repeat the animation 5 times
+                Clear() # Clear screen (all black)
+                Tree_off() # Send christmas tree animation (off first)
+                time.sleep(0.7) # wait
+                Tree_on() # Send christmas tree animation (on)
+                time.sleep(0.7)# wait
+                Clear() # clear screen again
+            if time.time() > main_end_time: #helps to break the main loop
+                break # break the loop
+    #---------------------------------------------------------------- ANIMATION 4: EVIL BALL
+    #-------- This animation will display a man, running away from a bouncing ball
+    if choice == 4:
+        print("This guy really doesn't like sports")
+    #------- The loop will multiplicate functions parameters (exponential)
+    #------- Creating a scrolling, running effect for both ball and Stickman
+        delay = 15
+        end_time = time.time() + delay
         while True: # Keep running
-            led_wall = numpy.roll(led_wall, 3) # Roll tuple by 3
-            client.put_pixels(led_wall) # Display
-            time.sleep(0.02)
-            if time.time() > end_time: # Check, if delay time already passed
-                break # End the loop
-
-    #------------------------------------------Pattern 7 - Pink and Light Blue DNA
-        Clear() # Clear screen ( all black)
-        DNA() # Display DNA animation
-        led = 0
-        delay = 7 # variable for 7 seconds delay
-        end_time = time.time() + delay # variable for current time + delay
-        while True: # Keep running
-            led_wall_preshift = [] # Make new (empty) array for scrolling effect
-            led_wall_preshift.append(numpy.roll(led_wall[0:60], 3)) # add first row, rolling tuple by 3
-            led_wall_preshift.append(numpy.roll(led_wall[60:120], 3)) # add second row, rolling tuple by 3
-            led_wall_preshift.append(numpy.roll(led_wall[120:180], 3)) # add third row, rolling tuple by 3
-            led_wall_preshift.append(numpy.roll(led_wall[180:240], 3)) # add fouth row, rolling tuple by 3
-            led_wall_preshift.append(numpy.roll(led_wall[240:300], 3)) # add fifth row, rolling tuple by 3
-            led_wall_preshift.append(numpy.roll(led_wall[300:360], 3)) # add sixth row, rolling tuple by 3
-
-            led_wall = [] # empty main list
-
-            #Add all rows to main list
-            for x in led_wall_preshift:
-                for y in x:
-                    led_wall.append(y)
-                                    
-            client.put_pixels(led_wall) # Display
-            time.sleep(0.1)
-            if time.time() > end_time: # Check, if delay has already passed
-                break # End the loop
-    #------------------------------------------Pattern 8 - Blinking Christmas Tree
-        for x in range(5): # The loop will repeat the animation 5 times
-            Clear() # Clear screen (all black)
-            Tree_off() # Send christmas tree animation (off first)
-            time.sleep(0.7) # wait
-            Tree_on() # Send christmas tree animation (on)
-            time.sleep(0.7)# wait
-            Clear() # clear screen again
-#---------------------------------------------------------------- ANIMATION 4: EVIL BALL
-#-------- This animation will display a man, running away from a bouncing ball
-if choice == 4:
-    print("This guy really doesn't like sports")
-#------- The loop will multiplicate functions parameters (exponential)
-#------- Creating a scrolling, running effect for both ball and Stickman
-    while True: # Keep running
-        for i in range(5): # iterate 5 times (then repeats)
-            Ball_Down(i*11)# 1i*11, 2i*11, 3i*11....
-            Stickman_Run(i*11)# 1i*11, 2i*11, 3i*11....
-            time.sleep(0.5)# Minimum value that sllep can have without crashing the animation
-            Clear()# Make screen all black
-            Ball_Mid_Up(i*11) # 1i*11, 2i*11, 3i*11....
-            Stickman_Rest(i*11) # 1i*11, 2i*11, 3i*11....
-            time.sleep(0.5) # wait
-            Clear() # Clear screen (all black)
-            Ball_Up(i*11) # 1i*11, 2i*11, 3i*11....
-            Stickman_Run(i*11+6)# Since the Stickman has only 2 functions,
-                                # And they needed to be moved further: 18*11+6, 2i*11+6....
-            time.sleep(0.5) # wait
-            Clear() # clear screen (all black)
-            Ball_Mid_Down(i*11) # 1i*11, 2i*11, 3i*11....
-            Stickman_Rest(i*11+6)# # 1i*11+6, 2i*11+6, 3i*11+6....
-            time.sleep(0.5) # wait
-            Clear() # clear screen
-    
+            for i in range(5): # iterate 5 times (then repeats)
+                Ball_Down(i*11)# 1i*11, 2i*11, 3i*11....
+                Stickman_Run(i*11)# 1i*11, 2i*11, 3i*11....
+                time.sleep(0.4)# Minimum value that sllep can have without crashing the animation
+                Clear()# Make screen all black
+                Ball_Mid_Up(i*11) # 1i*11, 2i*11, 3i*11....
+                Stickman_Rest(i*11) # 1i*11, 2i*11, 3i*11....
+                time.sleep(0.4) # wait
+                Clear() # Clear screen (all black)
+                Ball_Up(i*11) # 1i*11, 2i*11, 3i*11....
+                Stickman_Run(i*11+6)# Since the Stickman has only 2 functions,
+                                    # And they needed to be moved further: 18*11+6, 2i*11+6....
+                time.sleep(0.4) # wait
+                Clear() # clear screen (all black)
+                Ball_Mid_Down(i*11) # 1i*11, 2i*11, 3i*11....
+                Stickman_Rest(i*11+6)# # 1i*11+6, 2i*11+6, 3i*11+6....
+                time.sleep(0.4) # wait
+                Clear() # clear screen
+            if time.time() > end_time:
+                break
+        
