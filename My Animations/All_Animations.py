@@ -24,8 +24,8 @@ def Wave(x,y,z):
         led_wall = numpy.roll(led_wall, 3) # Roll tuple by 3
         client.put_pixels(led_wall)
         time.sleep(0.01)
-        if time.time() > end_time:
-            break
+        if time.time() > end_time: # if time passed is greater than end time
+            break # break the loop
         
 #------------------------------------------------------------- FUNCTIONS for CHRISTMAS LIGHTS
 #-------------------------------------------------------- Function for Transaction Effect (from Middle to Extremities)
@@ -699,7 +699,7 @@ client.put_pixels(led_wall)
 fade = 10 # Val for fading
 s = 1.0 # Maximum Color
 v = 1.0 # Maximum Brightness
-score = 0 # Valriable to store Score (Animation 2 - Guess The Game)
+
 
 # ------------------------------------------ Below, a user input is required. User can input a number from 1 to 6, choosing the respective animation
 while True:
@@ -711,7 +711,7 @@ while True:
           |                        \t                            |
           |    2) Guess the Game   \t 5) VideoMaker Effects      |
           |                        \t                            |
-          |    3) Christmas Lights \t 6) Colorful Piramids       |
+          |    3) Christmas Lights \t 6) Colorful Pyramids       |
           |                        \t                            |
           |_________________________________________________________|''')
 
@@ -729,8 +729,8 @@ while True:
             choice = input("Not a number! Please Select a whole number: ")
             #ask for correct input
     #---------------------------------------------------------------- ANIMATION 1: FAVORITE COLOR
-    #-----------------------------------In this animation the user will be ask to choose the favorite color by selecting the respective number.
-    #----------------------------------- As result, a rolling "wave" of the selected color will be (continuously) display in the simulator
+    #-----------------------------------In this animation the user will be asked to choose the favorite color by selecting the respective number.
+    #----------------------------------- As result, a rolling "wave" of the selected color will be displayed in the simulator
     if choice == 1: # if input is 1: Play first anymation
         choose = input(''' Hello!
                 What's your favourite colour?
@@ -778,10 +778,11 @@ while True:
     #--------------------------------------------------------------- ANIMATION 2: GUESS THE GAME
     #------------------------- In this animation, the user will play a guessing game, identifying some set still animation.
     if choice == 2:
+        score = 0 # Var to store Score
         choice = input('''\t\t\t Welcome to GUESS THE GAME!
             You will see a series of recreated images on the LED display.
             Please identify the videogame and type in your answer.
-            Be carefull, you will only get one chance!
+            Be carefull, as you will only get one chance!
             \n\t\t\t\t GOOD LUCK!
             \n\t Are You Ready to start? \t Please type 'Yes' or 'No'\n :''') #User input
         while True: #Keep running
